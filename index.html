@@ -604,6 +604,7 @@
             justify-content: center;
             margin: 0 auto 30px;
             position: relative;
+            transition: all 0.5s ease;
         }
 
         .score-inner {
@@ -621,6 +622,7 @@
             font-size: 36px;
             font-weight: 700;
             color: var(--success);
+            transition: color 0.5s ease;
         }
 
         .score-label {
@@ -1447,33 +1449,33 @@
             
             <div class="score-circle">
                 <div class="score-inner">
-                    <div class="score-value" id="healthScore">7.5</div>
-                    <div class="score-label" id="healthLabel">Boa</div>
+                    <div class="score-value" id="healthScore">0.0</div>
+                    <div class="score-label" id="healthLabel">Indisponível</div>
                 </div>
             </div>
             
-            <p class="text-center" id="healthDescription">Sua saúde financeira está em um nível bom, mas há espaço para melhorias. <br>Foque em reduzir gastos desnecessários e aumentar sua reserva de emergência.</p>
+            <p class="text-center" id="healthDescription">Adicione transações para calcular sua saúde financeira.</p>
             
             <div class="health-tips">
                 <div class="health-tip">
                     <i class="fas fa-piggy-bank"></i>
                     <h4>Reserva de Emergência</h4>
-                    <p id="reserveTip">Você tem 2 meses de reserva. O ideal é ter pelo menos 6 meses de despesas essenciais guardadas.</p>
+                    <p id="reserveTip">Adicione suas receitas e despesas para calcular sua reserva de emergência.</p>
                 </div>
                 <div class="health-tip">
                     <i class="fas fa-chart-line"></i>
                     <h4>Dívidas</h4>
-                    <p id="debtTip">Suas dívidas consomem 15% da sua renda. Tente reduzir para menos de 10%.</p>
+                    <p id="debtTip">Adicione transações para analisar suas dívidas.</p>
                 </div>
                 <div class="health-tip">
                     <i class="fas fa-utensils"></i>
                     <h4>Alimentação</h4>
-                    <p id="foodTip">Você gasta 22% da sua renda com alimentação. Considere reduzir para 15-18%.</p>
+                    <p id="foodTip">Adicione transações de alimentação para receber dicas personalizadas.</p>
                 </div>
             </div>
             
             <div class="text-center mt-30">
-                <a href="#" class="btn btn-primary">Fazer Avaliação Completa</a>
+                <a href="#dashboard" class="btn btn-primary">Adicionar Transações</a>
             </div>
         </div>
     </section>
@@ -2005,36 +2007,77 @@
             const foodTipElement = document.getElementById('foodTip');
             
             if (transactions.length === 0) {
-                healthScoreElement.textContent = '7.5';
-                healthLabelElement.textContent = 'Boa';
-                healthDescriptionElement.textContent = 'Sua saúde financeira está em um nível bom, mas há espaço para melhorias. Foque em reduzir gastos desnecessários e aumentar sua reserva de emergência.';
-                reserveTipElement.textContent = 'Você tem 2 meses de reserva. O ideal é ter pelo menos 6 meses de despesas essenciais guardadas.';
-                debtTipElement.textContent = 'Suas dívidas consomem 15% da sua renda. Tente reduzir para menos de 10%.';
-                foodTipElement.textContent = 'Você gasta 22% da sua renda com alimentação. Considere reduzir para 15-18%.';
+                healthScoreElement.textContent = '0.0';
+                healthLabelElement.textContent = 'Indisponível';
+                healthDescriptionElement.textContent = 'Adicione transações para calcular sua saúde financeira.';
+                reserveTipElement.textContent = 'Adicione suas receitas e despesas para calcular sua reserva de emergência.';
+                debtTipElement.textContent = 'Adicione transações para analisar suas dívidas.';
+                foodTipElement.textContent = 'Adicione transações de alimentação para receber dicas personalizadas.';
                 return;
             }
             
             // Calcular métricas de saúde financeira
             const savingsRate = income > 0 ? (balance / income) * 100 : 0;
             const expenseRate = income > 0 ? (expense / income) * 100 : 100;
+            
+            // Calcular despesas por categoria
             const housingExpense = transactions
                 .filter(t => t.type === 'expense' && t.category === 'housing')
                 .reduce((sum, t) => sum + t.amount, 0);
+            
+            const foodExpense = transactions
+                .filter(t => t.type === 'expense' && t.category === 'food')
+                .reduce((sum, t) => sum + t.amount, 0);
+            
+            const transportExpense = transactions
+                .filter(t => t.type === 'expense' && t.category === 'transport')
+                .reduce((sum, t) => sum + t.amount, 0);
+            
+            const entertainmentExpense = transactions
+                .filter(t => t.type === 'expense' && t.category === 'entertainment')
+                .reduce((sum, t) => sum + t.amount, 0);
+            
+            // Calcular taxas percentuais
             const housingRate = income > 0 ? (housingExpense / income) * 100 : 0;
+            const foodRate = income > 0 ? (foodExpense / income) * 100 : 0;
+            const transportRate = income > 0 ? (transportExpense / income) * 100 : 0;
+            const entertainmentRate = income > 0 ? (entertainmentExpense / income) * 100 : 0;
             
             // Calcular pontuação de saúde (0-10)
-            let score = 7.5; // Base
+            let score = 5.0; // Base
             
             // Ajustar baseado na taxa de poupança
-            if (savingsRate > 20) score += 1.5;
-            else if (savingsRate > 10) score += 0.5;
-            else if (savingsRate < 0) score -= 2;
-            else if (savingsRate < 5) score -= 1;
+            if (savingsRate > 20) score += 2.5;
+            else if (savingsRate > 15) score += 2.0;
+            else if (savingsRate > 10) score += 1.5;
+            else if (savingsRate > 5) score += 1.0;
+            else if (savingsRate > 0) score += 0.5;
+            else if (savingsRate < -10) score -= 2.0;
+            else if (savingsRate < 0) score -= 1.0;
             
-            // Ajustar baseado na taxa de moradia
-            if (housingRate > 30) score -= 1.5;
-            else if (housingRate > 25) score -= 0.5;
-            else if (housingRate < 15) score += 0.5;
+            // Ajustar baseado na taxa de moradia (ideal < 30%)
+            if (housingRate <= 25) score += 1.0;
+            else if (housingRate <= 30) score += 0.5;
+            else if (housingRate > 40) score -= 1.5;
+            else if (housingRate > 35) score -= 1.0;
+            else if (housingRate > 30) score -= 0.5;
+            
+            // Ajustar baseado na taxa de alimentação (ideal 15-18%)
+            if (foodRate >= 12 && foodRate <= 20) score += 0.5;
+            else if (foodRate > 25) score -= 0.5;
+            else if (foodRate > 30) score -= 1.0;
+            
+            // Ajustar baseado no saldo
+            if (balance > 0) score += 0.5;
+            if (balance > income * 0.1) score += 0.5;
+            
+            // Bônus para diversificação de gastos
+            const essentialExpenses = housingExpense + foodExpense + transportExpense;
+            const nonEssentialExpenses = entertainmentExpense;
+            const essentialRate = income > 0 ? (essentialExpenses / income) * 100 : 0;
+            
+            if (essentialRate <= 60) score += 0.5;
+            if (nonEssentialExpenses > 0 && nonEssentialExpenses <= income * 0.15) score += 0.5;
             
             // Limitar entre 0 e 10
             score = Math.max(0, Math.min(10, score));
@@ -2042,13 +2085,17 @@
             // Atualizar elementos
             healthScoreElement.textContent = score.toFixed(1);
             
-            if (score >= 8) {
+            // Atualizar label e descrição baseado na pontuação
+            if (score >= 8.5) {
                 healthLabelElement.textContent = 'Excelente';
-                healthDescriptionElement.textContent = 'Sua saúde financeira está excelente! Continue com esse bom trabalho e considere investir para multiplicar seu patrimônio.';
-            } else if (score >= 6) {
+                healthDescriptionElement.textContent = 'Sua saúde financeira está excelente! Você tem um ótimo controle sobre suas finanças e está no caminho certo para a liberdade financeira.';
+            } else if (score >= 7.0) {
+                healthLabelElement.textContent = 'Muito Boa';
+                healthDescriptionElement.textContent = 'Sua saúde financeira está muito boa! Continue com esse bom trabalho e foque em otimizar ainda mais seus gastos.';
+            } else if (score >= 5.5) {
                 healthLabelElement.textContent = 'Boa';
                 healthDescriptionElement.textContent = 'Sua saúde financeira está em um nível bom, mas há espaço para melhorias. Foque em reduzir gastos desnecessários e aumentar sua reserva de emergência.';
-            } else if (score >= 4) {
+            } else if (score >= 4.0) {
                 healthLabelElement.textContent = 'Regular';
                 healthDescriptionElement.textContent = 'Sua saúde financeira precisa de atenção. Considere revisar seus gastos e criar um plano para equilibrar suas finanças.';
             } else {
@@ -2056,18 +2103,56 @@
                 healthDescriptionElement.textContent = 'Sua saúde financeira precisa de atenção imediata. Recomendamos buscar orientação financeira profissional.';
             }
             
-            // Atualizar dicas
-            const monthsReserve = income > 0 ? Math.floor(balance / (expense / 12)) : 0;
-            reserveTipElement.textContent = `Você tem ${monthsReserve} meses de reserva. O ideal é ter pelo menos 6 meses de despesas essenciais guardadas.`;
+            // Atualizar dicas personalizadas
+            const monthsReserve = expense > 0 ? Math.floor(balance / (expense / 12)) : 0;
+            if (monthsReserve >= 6) {
+                reserveTipElement.textContent = `Excelente! Você tem ${monthsReserve} meses de reserva de emergência. Continue mantendo essa segurança financeira.`;
+            } else if (monthsReserve >= 3) {
+                reserveTipElement.textContent = `Bom! Você tem ${monthsReserve} meses de reserva. O ideal é ter pelo menos 6 meses de despesas essenciais guardadas.`;
+            } else if (monthsReserve > 0) {
+                reserveTipElement.textContent = `Cuidado! Você tem apenas ${monthsReserve} meses de reserva. Tente aumentar para pelo menos 3-6 meses de despesas.`;
+            } else {
+                reserveTipElement.textContent = `Atenção! Você não tem reserva de emergência. Priorize criar uma reserva equivalente a 3-6 meses de despesas.`;
+            }
             
-            const debtPercentage = income > 0 ? (expense / income) * 100 : 0;
-            debtTipElement.textContent = `Suas despesas consomem ${debtPercentage.toFixed(1)}% da sua renda. Tente reduzir para menos de 70%.`;
+            const expensePercentage = income > 0 ? (expense / income) * 100 : 0;
+            if (expensePercentage <= 70) {
+                debtTipElement.textContent = `Ótimo! Suas despesas consomem ${expensePercentage.toFixed(1)}% da sua renda. Você está dentro do ideal (até 70%).`;
+            } else if (expensePercentage <= 85) {
+                debtTipElement.textContent = `Atenção! Suas despesas consomem ${expensePercentage.toFixed(1)}% da sua renda. Tente reduzir para menos de 70%.`;
+            } else {
+                debtTipElement.textContent = `Cuidado! Suas despesas consomem ${expensePercentage.toFixed(1)}% da sua renda. Você está gastando mais do que ganha.`;
+            }
             
-            const foodExpense = transactions
-                .filter(t => t.type === 'expense' && t.category === 'food')
-                .reduce((sum, t) => sum + t.amount, 0);
-            const foodPercentage = income > 0 ? (foodExpense / income) * 100 : 0;
-            foodTipElement.textContent = `Você gasta ${foodPercentage.toFixed(1)}% da sua renda com alimentação. Considere reduzir para 15-18%.`;
+            if (foodRate <= 18) {
+                foodTipElement.textContent = `Perfeito! Você gasta ${foodRate.toFixed(1)}% da sua renda com alimentação. Continue assim!`;
+            } else if (foodRate <= 25) {
+                foodTipElement.textContent = `Bom! Você gasta ${foodRate.toFixed(1)}% da sua renda com alimentação. O ideal é manter entre 15-18%.`;
+            } else {
+                foodTipElement.textContent = `Atenção! Você gasta ${foodRate.toFixed(1)}% da sua renda com alimentação. Considere reduzir para 15-18%.`;
+            }
+            
+            // Atualizar o círculo de pontuação visualmente
+            updateScoreCircle(score);
+        }
+
+        // Atualizar o círculo de pontuação visualmente
+        function updateScoreCircle(score) {
+            const scoreCircle = document.querySelector('.score-circle');
+            const percentage = (score / 10) * 100;
+            
+            // Definir cor baseado na pontuação
+            let color;
+            if (score >= 8) color = '#10b981'; // Verde - Excelente
+            else if (score >= 6) color = '#f59e0b'; // Amarelo - Bom
+            else if (score >= 4) color = '#f97316'; // Laranja - Regular
+            else color = '#ef4444'; // Vermelho - Preocupante
+            
+            scoreCircle.style.background = `conic-gradient(${color} 0% ${percentage}%, var(--text-muted) ${percentage}% 100%)`;
+            
+            // Atualizar cor do texto da pontuação
+            const scoreValue = document.querySelector('.score-value');
+            scoreValue.style.color = color;
         }
         
         // Deletar transação
