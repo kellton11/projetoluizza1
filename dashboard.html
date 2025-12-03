@@ -1,0 +1,2166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Finança+</title>
+    <meta name="description"
+        content="Solução completa para controle financeiro pessoal. Organize sua renda, evite dívidas e alcance sua liberdade financeira.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #8b5cf6;
+            --secondary: #06d6a0;
+            --secondary-dark: #05b384;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --dark: #0f172a;
+            --dark-card: #1e293b;
+            --darker: #0a0f1c;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-light: #cbd5e1;
+            --border: #334155;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            --gradient-secondary: linear-gradient(135deg, var(--secondary) 0%, #34d399 100%);
+            --gradient-dark: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+            --gradient-card: linear-gradient(135deg, var(--dark-card) 0%, #1a2438 100%);
+            --gradient-premium: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--gradient-dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Layout e Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            font-size: 18px;
+            box-shadow: var(--shadow);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .logo-text span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* User Menu */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-plan {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .user-plan.free {
+            background: rgba(100, 116, 139, 0.2);
+            color: var(--text-muted);
+        }
+
+        .user-plan.premium {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+
+        .user-plan.family {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+        }
+
+        .btn-logout {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text);
+            background: var(--glass);
+        }
+
+        .nav-premium {
+            background: var(--gradient-premium);
+            color: white;
+            font-weight: 600;
+        }
+
+        .nav-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .mobile-menu-btn:hover {
+            background: var(--glass);
+        }
+
+        /* Welcome Banner */
+        .welcome-banner {
+            margin-top: 100px;
+            padding: 30px;
+            background: var(--gradient-card);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-text h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text p {
+            color: var(--text-muted);
+        }
+
+        .upgrade-banner {
+            background: var(--gradient-premium);
+            border-radius: 12px;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .upgrade-banner:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Content restricted for free users */
+        .premium-restricted {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .premium-restricted .restricted-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .restricted-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--gradient-premium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 32px;
+            color: white;
+        }
+
+        .restricted-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .restricted-content p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            max-width: 400px;
+        }
+
+        /* Dashboard Sections */
+        .section {
+            padding: 60px 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--gradient-card);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-value.positive {
+            color: var(--success);
+        }
+
+        .stat-value.negative {
+            color: var(--danger);
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .card {
+            background: var(--gradient-card);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--glass-border);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .transactions-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--glass-border);
+            transition: background 0.3s ease;
+        }
+
+        .transaction-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .transaction-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .transaction-icon.income {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .transaction-icon.expense {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        .transaction-details h4 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .transaction-details p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .transaction-amount {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .transaction-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--glass);
+            color: var(--text);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-premium {
+            background: var(--gradient-premium);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-icon:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Premium Features */
+        .premium-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .premium-feature-card {
+            background: var(--gradient-card);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .premium-feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+
+        .premium-feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: var(--gradient-premium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--darker);
+            padding: 60px 0 30px;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            nav {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                margin-top: 20px;
+            }
+
+            nav.open {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .welcome-banner {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .user-info .user-name {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-0 {
+            margin-bottom: 0;
+        }
+
+        .mt-0 {
+            margin-top: 0;
+        }
+
+        .mb-10 {
+            margin-bottom: 10px;
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+
+        .mb-30 {
+            margin-bottom: 30px;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        .mt-30 {
+            margin-top: 30px;
+        }
+
+        .mt-50 {
+            margin-top: 50px;
+        }
+
+        /* Notificações */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            z-index: 9999;
+            animation: slideIn 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 350px;
+        }
+
+        .notification.success {
+            background: var(--success);
+            color: white;
+        }
+
+        .notification.error {
+            background: var(--danger);
+            color: white;
+        }
+
+        .notification.info {
+            background: var(--primary);
+            color: white;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Estilos para select de categoria */
+        select.form-control option {
+            background: var(--dark-card);
+            color: var(--text);
+        }
+
+        select.form-control option:disabled {
+            color: var(--text-muted);
+        }
+
+        .limit-warning {
+            color: var(--warning);
+            font-size: 12px;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .limit-reached {
+            color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+            padding: 5px 10px;
+            border-radius: 5px;
+            border-left: 3px solid var(--danger);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Finança+</h1>
+                        <span>Controle financeiro inteligente</span>
+                    </div>
+                </a>
+
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <nav id="mainNav">
+                    <a href="#dashboard" class="nav-link active">Dashboard</a>
+                    <a href="#transactions" class="nav-link">Transações</a>
+                    <a href="#reports" class="nav-link">Relatórios</a>
+                    <a href="#premium" class="nav-link">Premium</a>
+                    <div class="user-menu">
+                        <div class="user-info" id="userInfo">
+                            <!-- Preenchido via JavaScript -->
+                        </div>
+                        <button class="btn-logout" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Sair
+                        </button>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner fade-in" id="welcomeBanner">
+            <!-- Preenchido via JavaScript -->
+        </div>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard">
+            <div class="section-header">
+                <h2 class="section-title">Visão Geral</h2>
+                <div id="planLimitInfo">
+                    <!-- Preenchido via JavaScript -->
+                </div>
+            </div>
+
+            <div class="stats-cards">
+                <div class="stat-card fade-in">
+                    <div class="stat-value" id="totalIncome">R$ 0,00</div>
+                    <div class="stat-label">Receitas</div>
+                </div>
+                <div class="stat-card fade-in delay-1">
+                    <div class="stat-value" id="totalExpense">R$ 0,00</div>
+                    <div class="stat-label">Despesas</div>
+                </div>
+                <div class="stat-card fade-in delay-2">
+                    <div class="stat-value" id="totalBalance">R$ 0,00</div>
+                    <div class="stat-label">Saldo</div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card fade-in">
+                    <div class="card-header">
+                        <h3 class="card-title">Adicionar Transação</h3>
+                        <span class="transaction-count" id="transactionCount">0/50</span>
+                    </div>
+
+                    <form id="transactionForm">
+                        <div class="form-group">
+                            <label class="form-label" for="description">Descrição</label>
+                            <input type="text" id="description" class="form-control"
+                                placeholder="Ex: Salário, Aluguel, Mercado" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="amount">Valor (R$)</label>
+                            <input type="number" id="amount" class="form-control" placeholder="0.00" step="0.01" min="0"
+                                required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="type">Tipo</label>
+                                <select id="type" class="form-control" required>
+                                    <option value="income">Receita</option>
+                                    <option value="expense">Despesa</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="category">Categoria</label>
+                                <select id="category" class="form-control" required>
+                                    <!-- Preenchido via JavaScript -->
+                                </select>
+                                <div id="categoryWarning" class="limit-warning" style="display: none;">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <span>Plano gratuito limitado a 3 categorias</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="date">Data</label>
+                            <input type="date" id="date" class="form-control" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%;" id="submitTransactionBtn">
+                            <i class="fas fa-check"></i>
+                            Adicionar Transação
+                        </button>
+
+                        <div id="transactionLimitWarning" class="limit-warning"
+                            style="display: none; margin-top: 10px;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span id="remainingTransactions">50 transações restantes</span>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card fade-in delay-1">
+                    <div class="card-header">
+                        <h3 class="card-title">Transações Recentes</h3>
+                    </div>
+
+                    <div class="transactions-list" id="transactionsList">
+                        <!-- Transações serão inseridas aqui via JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid" style="margin-top: 30px;">
+                <div class="card fade-in">
+                    <div class="card-header">
+                        <h3 class="card-title">Evolução da Renda vs Gastos</h3>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="budgetChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card fade-in delay-1">
+                    <div class="card-header">
+                        <h3 class="card-title">Distribuição de Gastos</h3>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="expensesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Saúde Financeira (Premium Feature) -->
+        <section class="section" id="saude">
+            <div class="premium-restricted" id="healthScoreSection">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Saúde Financeira</h3>
+                        <span class="premium-badge">PREMIUM</span>
+                    </div>
+
+                    <div class="health-score-content">
+                        <div class="score-circle" style="margin: 0 auto 30px;">
+                            <div class="score-inner">
+                                <div class="score-value" id="healthScore">0.0</div>
+                                <div class="score-label" id="healthLabel">Indisponível</div>
+                            </div>
+                        </div>
+
+                        <p class="text-center" id="healthDescription">Adicione transações para calcular sua saúde
+                            financeira.</p>
+
+                        <div class="health-tips"
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px;">
+                            <div class="health-tip"
+                                style="background: var(--gradient-card); border-radius: 10px; padding: 20px;">
+                                <i class="fas fa-piggy-bank"></i>
+                                <h4>Reserva de Emergência</h4>
+                                <p id="reserveTip">Adicione suas receitas e despesas para calcular sua reserva de
+                                    emergência.</p>
+                            </div>
+                            <div class="health-tip"
+                                style="background: var(--gradient-card); border-radius: 10px; padding: 20px;">
+                                <i class="fas fa-chart-line"></i>
+                                <h4>Dívidas</h4>
+                                <p id="debtTip">Adicione transações para analisar suas dívidas.</p>
+                            </div>
+                            <div class="health-tip"
+                                style="background: var(--gradient-card); border-radius: 10px; padding: 20px;">
+                                <i class="fas fa-utensils"></i>
+                                <h4>Alimentação</h4>
+                                <p id="foodTip">Adicione transações de alimentação para receber dicas personalizadas.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="restricted-overlay" id="healthRestrictedOverlay">
+                    <div class="restricted-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="restricted-content">
+                        <h3>Saúde Financeira Premium</h3>
+                        <p>Receba um diagnóstico completo da sua situação financeira com plano personalizado de
+                            melhoria.</p>
+                        <button class="btn btn-premium" onclick="upgradeToPremium()">
+                            <i class="fas fa-crown"></i>
+                            Tornar-se Premium
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Planejador Financeiro (Premium Feature) -->
+        <section class="section" id="planejador">
+            <div class="premium-restricted" id="plannerSection">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Planejador Financeiro 30/50/20</h3>
+                        <span class="premium-badge">PREMIUM</span>
+                    </div>
+
+                    <div class="planner-content">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                            <div>
+                                <h4 style="margin-bottom: 15px;">Distribuição Ideal</h4>
+                                <div class="planner-item" style="margin-bottom: 10px;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                        <span>Necessidades (50%)</span>
+                                        <span id="needsAmount">R$ 0,00</span>
+                                    </div>
+                                    <div
+                                        style="height: 8px; background: var(--text-muted); border-radius: 4px; overflow: hidden;">
+                                        <div style="width: 50%; height: 100%; background: var(--primary);"></div>
+                                    </div>
+                                </div>
+                                <div class="planner-item" style="margin-bottom: 10px;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                        <span>Desejos (30%)</span>
+                                        <span id="wantsAmount">R$ 0,00</span>
+                                    </div>
+                                    <div
+                                        style="height: 8px; background: var(--text-muted); border-radius: 4px; overflow: hidden;">
+                                        <div style="width: 30%; height: 100%; background: var(--secondary);"></div>
+                                    </div>
+                                </div>
+                                <div class="planner-item">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                        <span>Poupança (20%)</span>
+                                        <span id="savingsAmount">R$ 0,00</span>
+                                    </div>
+                                    <div
+                                        style="height: 8px; background: var(--text-muted); border-radius: 4px; overflow: hidden;">
+                                        <div style="width: 20%; height: 100%; background: var(--success);"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 style="margin-bottom: 15px;">Sua Distribuição</h4>
+                                <div id="currentDistributionChart" style="height: 200px;">
+                                    <!-- Gráfico será inserido aqui -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background: rgba(15, 23, 42, 0.5); border-radius: 10px; padding: 20px;">
+                            <h4 style="margin-bottom: 15px;">Recomendações Personalizadas</h4>
+                            <div id="plannerRecommendations">
+                                <p>Adicione suas receitas para receber recomendações personalizadas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="restricted-overlay" id="plannerRestrictedOverlay">
+                    <div class="restricted-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="restricted-content">
+                        <h3>Planejador Financeiro Premium</h3>
+                        <p>Planejamento automático 30/50/20 ou personalizado com metas e acompanhamento em tempo real.
+                        </p>
+                        <button class="btn btn-premium" onclick="upgradeToPremium()">
+                            <i class="fas fa-crown"></i>
+                            Tornar-se Premium
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cursos Premium (Premium Feature) -->
+        <section class="section" id="cursos">
+            <div class="premium-restricted" id="coursesSection">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Cursos de Educação Financeira</h3>
+                        <span class="premium-badge">PREMIUM</span>
+                    </div>
+
+                    <div class="premium-features">
+                        <div class="premium-feature-card">
+                            <div class="premium-feature-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <h4>Como sair das dívidas</h4>
+                            <p>Curso completo com 10 módulos para eliminar dívidas de forma eficiente.</p>
+                            <button class="btn btn-secondary" style="margin-top: 15px;">Acessar Curso</button>
+                        </div>
+
+                        <div class="premium-feature-card">
+                            <div class="premium-feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h4>Investimentos para iniciantes</h4>
+                            <p>Aprenda os fundamentos dos investimentos e comece a multiplicar seu dinheiro.</p>
+                            <button class="btn btn-secondary" style="margin-top: 15px;">Acessar Curso</button>
+                        </div>
+
+                        <div class="premium-feature-card">
+                            <div class="premium-feature-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <h4>Planejamento para compra da casa própria</h4>
+                            <p>Guia passo a passo para conquistar seu imóvel sem comprometer suas finanças.</p>
+                            <button class="btn btn-secondary" style="margin-top: 15px;">Acessar Curso</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="restricted-overlay" id="coursesRestrictedOverlay">
+                    <div class="restricted-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="restricted-content">
+                        <h3>Cursos Premium Exclusivos</h3>
+                        <p>Acesso a biblioteca completa com artigos, vídeos e cursos sobre finanças pessoais e
+                            investimentos.</p>
+                        <button class="btn btn-premium" onclick="upgradeToPremium()">
+                            <i class="fas fa-crown"></i>
+                            Tornar-se Premium
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upgrade to Premium Banner -->
+        <section class="section" id="premium">
+            <div class="card"
+                style="background: var(--gradient-premium); color: white; text-align: center; padding: 50px 30px;">
+                <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Eleve Sua Experiência Financeira</h2>
+                <p
+                    style="font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Desbloqueie recursos exclusivos que vão transformar completamente sua relação com o dinheiro.
+                </p>
+
+                <div
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 700; margin-bottom: 10px;">+15</div>
+                        <div>Categorias de Gastos</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 700; margin-bottom: 10px;">∞</div>
+                        <div>Transações Ilimitadas</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 700; margin-bottom: 10px;">24/7</div>
+                        <div>Suporte Prioritário</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 700; margin-bottom: 10px;">10+</div>
+                        <div>Cursos Exclusivos</div>
+                    </div>
+                </div>
+
+                <div>
+                    <button class="btn"
+                        style="background: white; color: #f59e0b; font-size: 1.2rem; padding: 15px 40px;"
+                        onclick="upgradeToPremium()">
+                        <i class="fas fa-crown"></i>
+                        Tornar-se Premium por R$ 29,90/mês
+                    </button>
+                    <p style="margin-top: 15px; font-size: 14px; opacity: 0.9;">
+                        Cancele a qualquer momento • 7 dias de garantia
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h1>Finança+</h1>
+                            <span>Controle financeiro inteligente</span>
+                        </div>
+                    </a>
+                    <p class="mt-20">Tome controle da sua vida financeira com ferramentas poderosas e insights
+                        inteligentes.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Produto</h3>
+                    <ul class="footer-links">
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#saude">Saúde Financeira</a></li>
+                        <li><a href="#planejador">Planejador</a></li>
+                        <li><a href="#premium">Premium</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Empresa</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="#">Sobre Nós</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">Cookies</a></li>
+                        <li><a href="#">Segurança</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2023 Finança+. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Payment Modal -->
+    <div class="modal" id="payment-modal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 2000; align-items: center; justify-content: center;">
+        <div class="modal-content"
+            style="background: var(--gradient-card); border-radius: 15px; padding: 30px; width: 90%; max-width: 500px; position: relative; border: 1px solid var(--glass-border);">
+            <span class="close-modal" id="close-payment-modal"
+                style="position: absolute; top: 15px; right: 15px; font-size: 24px; cursor: pointer; color: var(--text-muted);">&times;</span>
+            <h2 style="margin-bottom: 20px;">Assinar Plano Premium</h2>
+
+            <div class="form-group">
+                <label class="form-label">Número do Cartão</label>
+                <input type="text" id="card-number" class="form-control" placeholder="1234 5678 9012 3456">
+            </div>
+
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-group">
+                    <label class="form-label">Validade</label>
+                    <input type="text" id="card-expiry" class="form-control" placeholder="MM/AA">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">CVV</label>
+                    <input type="text" id="card-cvv" class="form-control" placeholder="123">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Nome no Cartão</label>
+                <input type="text" id="card-name" class="form-control" placeholder="Nome completo">
+            </div>
+
+            <button class="btn btn-premium" style="width: 100%; margin-top: 20px;" onclick="processPayment()">
+                <i class="fas fa-lock"></i>
+                Pagar R$ 29,90/mês
+            </button>
+
+            <p style="text-align: center; margin-top: 15px; font-size: 12px; color: var(--text-muted);">
+                Pagamento seguro via criptografia SSL. Cancele a qualquer momento.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Sistema de persistência de dados
+        const STORAGE_KEY = 'financaplus_transactions';
+        let currentUser = JSON.parse(localStorage.getItem('financaplus_current_user')) || null;
+        let users = JSON.parse(localStorage.getItem('financaplus_users')) || [];
+
+        // Verificar se usuário está logado
+        if (!currentUser) {
+            window.location.href = 'index.html';
+        }
+
+        // Carregar transações do localStorage
+        function loadTransactions() {
+            const userTransactions = JSON.parse(localStorage.getItem(`${STORAGE_KEY}_${currentUser.id}`)) || [];
+            return userTransactions;
+        }
+
+        // Salvar transações no localStorage
+        function saveTransactions(transactions) {
+            localStorage.setItem(`${STORAGE_KEY}_${currentUser.id}`, JSON.stringify(transactions));
+        }
+
+        // Inicializar transações
+        let transactions = loadTransactions();
+
+        // Elementos DOM
+        const userInfo = document.getElementById('userInfo');
+        const welcomeBanner = document.getElementById('welcomeBanner');
+        const planLimitInfo = document.getElementById('planLimitInfo');
+        const transactionCount = document.getElementById('transactionCount');
+        const categorySelect = document.getElementById('category');
+        const categoryWarning = document.getElementById('categoryWarning');
+        const submitTransactionBtn = document.getElementById('submitTransactionBtn');
+        const transactionLimitWarning = document.getElementById('transactionLimitWarning');
+        const remainingTransactions = document.getElementById('remainingTransactions');
+        const transactionsList = document.getElementById('transactionsList');
+        const transactionForm = document.getElementById('transactionForm');
+        const totalIncomeElement = document.getElementById('totalIncome');
+        const totalExpenseElement = document.getElementById('totalExpense');
+        const totalBalanceElement = document.getElementById('totalBalance');
+
+        // Elementos de recursos premium
+        const healthScoreSection = document.getElementById('healthScoreSection');
+        const healthRestrictedOverlay = document.getElementById('healthRestrictedOverlay');
+        const plannerSection = document.getElementById('plannerSection');
+        const plannerRestrictedOverlay = document.getElementById('plannerRestrictedOverlay');
+        const coursesSection = document.getElementById('coursesSection');
+        const coursesRestrictedOverlay = document.getElementById('coursesRestrictedOverlay');
+        const premiumSection = document.getElementById('premium');
+
+        // Gráficos
+        let budgetChart, expensesChart;
+
+        // Categorias disponíveis por plano
+        const freeCategories = ['salary', 'housing', 'food', 'transport', 'entertainment', 'health', 'other'];
+        const premiumCategories = ['salary', 'housing', 'food', 'transport', 'entertainment', 'health', 'education', 'investments', 'shopping', 'travel', 'subscriptions', 'insurance', 'taxes', 'other'];
+
+        // Mapeamento de nomes de categorias
+        const categoryNames = {
+            'salary': 'Salário',
+            'housing': 'Moradia',
+            'food': 'Alimentação',
+            'transport': 'Transporte',
+            'entertainment': 'Lazer',
+            'health': 'Saúde',
+            'education': 'Educação',
+            'investments': 'Investimentos',
+            'shopping': 'Compras',
+            'travel': 'Viagens',
+            'subscriptions': 'Assinaturas',
+            'insurance': 'Seguros',
+            'taxes': 'Impostos',
+            'other': 'Outros'
+        };
+
+        // Limites do plano gratuito
+        const FREE_PLAN_LIMITS = {
+            maxTransactions: 50,
+            maxCategories: 3
+        };
+
+        // Inicializar a data atual no formulário
+        document.getElementById('date').valueAsDate = new Date();
+
+        // Função para mostrar notificação
+        function showNotification(message, type = 'info') {
+            // Remover notificações anteriores
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => notification.remove());
+
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                ${message}
+            `;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Atualizar informações do usuário
+        function updateUserInfo() {
+            // Atualizar menu do usuário
+            const firstLetter = currentUser.name.charAt(0).toUpperCase();
+            userInfo.innerHTML = `
+                <div class="user-avatar">${firstLetter}</div>
+                <div>
+                    <div class="user-name">${currentUser.name}</div>
+                    <div class="user-plan ${currentUser.plan}">${currentUser.plan === 'free' ? 'Plano Gratuito' : currentUser.plan === 'premium' ? 'Premium' : 'Família'}</div>
+                </div>
+            `;
+
+            // Atualizar banner de boas-vindas
+            if (currentUser.plan === 'free') {
+                welcomeBanner.innerHTML = `
+                    <div class="welcome-text">
+                        <h2>Olá, ${currentUser.name}!</h2>
+                        <p>Você está no plano gratuito. Desbloqueie recursos exclusivos assinando o Premium.</p>
+                    </div>
+                    <a href="#premium" class="upgrade-banner">
+                        <i class="fas fa-crown"></i>
+                        Tornar-se Premium
+                    </a>
+                `;
+
+                // Mostrar seção de upgrade
+                premiumSection.style.display = 'block';
+
+                planLimitInfo.innerHTML = `
+                    <span style="color: var(--text-muted); font-size: 14px;">
+                        ${transactions.length}/${FREE_PLAN_LIMITS.maxTransactions} transações
+                    </span>
+                `;
+
+                transactionCount.textContent = `${transactions.length}/${FREE_PLAN_LIMITS.maxTransactions}`;
+
+                // Mostrar overlay de restrição para features premium
+                healthRestrictedOverlay.style.display = 'flex';
+                plannerRestrictedOverlay.style.display = 'flex';
+                coursesRestrictedOverlay.style.display = 'flex';
+
+                // Adicionar classe de restrição
+                healthScoreSection.classList.add('premium-restricted');
+                plannerSection.classList.add('premium-restricted');
+                coursesSection.classList.add('premium-restricted');
+            } else {
+                welcomeBanner.innerHTML = `
+                    <div class="welcome-text">
+                        <h2>Olá, ${currentUser.name}!</h2>
+                        <p>Bem-vindo(a) ao Finança+ Premium. Aproveite todos os recursos exclusivos.</p>
+                    </div>
+                    <div style="padding: 15px 25px; background: rgba(16, 185, 129, 0.2); border-radius: 12px; color: var(--success); font-weight: 600;">
+                        <i class="fas fa-crown"></i>
+                        Usuário Premium
+                    </div>
+                `;
+
+                // ESCONDER A SEÇÃO DE UPGRADE (BANNER DE PROMOÇÃO)
+                premiumSection.style.display = 'none';
+
+                planLimitInfo.innerHTML = `
+                    <span style="color: var(--success); font-size: 14px;">
+                        <i class="fas fa-infinity"></i> Transações ilimitadas
+                    </span>
+                `;
+
+                transactionCount.textContent = `${transactions.length} transações`;
+
+                // Esconder overlay de restrição
+                healthRestrictedOverlay.style.display = 'none';
+                plannerRestrictedOverlay.style.display = 'none';
+                coursesRestrictedOverlay.style.display = 'none';
+
+                // Remover classe de restrição
+                healthScoreSection.classList.remove('premium-restricted');
+                plannerSection.classList.remove('premium-restricted');
+                coursesSection.classList.remove('premium-restricted');
+            }
+
+            // Atualizar categorias disponíveis
+            updateCategoryOptions();
+            // Verificar limites do plano
+            checkPlanLimits();
+        }
+
+        // Atualizar opções de categoria baseado no plano
+        function updateCategoryOptions() {
+            if (!categorySelect) {
+                console.error('Elemento #category não encontrado!');
+                return;
+            }
+            
+            // Determinar quais categorias mostrar
+            let categories;
+            if (currentUser.plan === 'free') {
+                // Plano gratuito: apenas 3 categorias
+                categories = freeCategories.slice(0, FREE_PLAN_LIMITS.maxCategories);
+                categoryWarning.style.display = 'flex';
+            } else {
+                // Plano premium: todas as categorias
+                categories = premiumCategories;
+                categoryWarning.style.display = 'none';
+            }
+
+            // Limpar select
+            categorySelect.innerHTML = '';
+
+            // Adicionar opção padrão
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = 'Selecione uma categoria';
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            categorySelect.appendChild(defaultOption);
+
+            // Adicionar categorias disponíveis
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = categoryNames[category] || category;
+                categorySelect.appendChild(option);
+            });
+
+            console.log('Categorias carregadas:', categories);
+        }
+
+        // Verificar e aplicar limites do plano
+        function checkPlanLimits() {
+            if (currentUser.plan === 'free') {
+                const remaining = FREE_PLAN_LIMITS.maxTransactions - transactions.length;
+
+                // Mostrar warning se estiver perto do limite
+                if (remaining <= 10) {
+                    transactionLimitWarning.style.display = 'flex';
+                    remainingTransactions.textContent = `${remaining} transações restantes`;
+
+                    if (remaining <= 5) {
+                        remainingTransactions.style.color = 'var(--warning)';
+                    }
+
+                    if (remaining <= 2) {
+                        remainingTransactions.style.color = 'var(--danger)';
+                    }
+                } else {
+                    transactionLimitWarning.style.display = 'none';
+                }
+
+                // Desabilitar botão se atingiu limite
+                if (transactions.length >= FREE_PLAN_LIMITS.maxTransactions) {
+                    submitTransactionBtn.disabled = true;
+                    submitTransactionBtn.innerHTML = '<i class="fas fa-lock"></i> Limite Atingido (50 transações)';
+                    submitTransactionBtn.style.opacity = '0.7';
+                    submitTransactionBtn.style.cursor = 'not-allowed';
+
+                    // Mostrar mensagem de limite atingido
+                    if (!document.getElementById('limitReachedMessage')) {
+                        const limitMessage = document.createElement('div');
+                        limitMessage.id = 'limitReachedMessage';
+                        limitMessage.className = 'limit-reached';
+                        limitMessage.innerHTML = `
+                            <i class="fas fa-exclamation-circle"></i>
+                            Você atingiu o limite de 50 transações do plano gratuito. 
+                            <a href="#premium" style="color: var(--warning); text-decoration: underline; margin-left: 5px;">
+                                Assine o Premium para continuar
+                            </a>
+                        `;
+                        transactionForm.appendChild(limitMessage);
+                    }
+                } else {
+                    submitTransactionBtn.disabled = false;
+                    submitTransactionBtn.innerHTML = '<i class="fas fa-check"></i> Adicionar Transação';
+                    submitTransactionBtn.style.opacity = '1';
+                    submitTransactionBtn.style.cursor = 'pointer';
+
+                    // Remover mensagem de limite se existir
+                    const limitMessage = document.getElementById('limitReachedMessage');
+                    if (limitMessage) {
+                        limitMessage.remove();
+                    }
+                }
+
+                // Mostrar warning se estiver perto do limite
+                if (transactions.length >= FREE_PLAN_LIMITS.maxTransactions - 10) {
+                    const remaining = FREE_PLAN_LIMITS.maxTransactions - transactions.length;
+                    planLimitInfo.innerHTML = `
+                        <span style="color: ${remaining <= 5 ? 'var(--warning)' : 'var(--text-muted)'}; font-size: 14px;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            ${remaining} transações restantes
+                        </span>
+                    `;
+                }
+            } else {
+                submitTransactionBtn.disabled = false;
+                submitTransactionBtn.innerHTML = '<i class="fas fa-check"></i> Adicionar Transação';
+                submitTransactionBtn.style.opacity = '1';
+                submitTransactionBtn.style.cursor = 'pointer';
+                transactionLimitWarning.style.display = 'none';
+
+                // Remover mensagem de limite se existir
+                const limitMessage = document.getElementById('limitReachedMessage');
+                if (limitMessage) {
+                    limitMessage.remove();
+                }
+            }
+        }
+
+        // Renderizar transações
+        function renderTransactions() {
+            transactionsList.innerHTML = '';
+
+            if (transactions.length === 0) {
+                transactionsList.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                        <div style="font-size: 48px; margin-bottom: 15px;">
+                            <i class="fas fa-receipt"></i>
+                        </div>
+                        <h3 style="margin-bottom: 10px;">Nenhuma transação</h3>
+                        <p>Adicione sua primeira transação para começar a controlar suas finanças.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Ordenar transações por data (mais recente primeiro)
+            const sortedTransactions = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            sortedTransactions.forEach(transaction => {
+                const transactionEl = document.createElement('div');
+                transactionEl.className = 'transaction-item';
+
+                transactionEl.innerHTML = `
+                    <div class="transaction-info">
+                        <div class="transaction-icon ${transaction.type}">
+                            <i class="fas ${transaction.type === 'income' ? 'fa-arrow-down' : 'fa-arrow-up'}"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <h4>${transaction.description}</h4>
+                            <p>${getCategoryName(transaction.category)} • ${formatDate(transaction.date)}</p>
+                        </div>
+                    </div>
+                    <div class="transaction-amount ${transaction.type === 'income' ? 'positive' : 'negative'}">
+                        ${transaction.type === 'income' ? '+' : '-'} R$ ${transaction.amount.toFixed(2)}
+                    </div>
+                    <div class="transaction-actions">
+                        <button class="btn-icon" onclick="deleteTransaction(${transaction.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+
+                transactionsList.appendChild(transactionEl);
+            });
+        }
+
+        // Obter nome da categoria
+        function getCategoryName(category) {
+            return categoryNames[category] || 'Outros';
+        }
+
+        // Formatar data
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('pt-BR');
+        }
+
+        // Atualizar estatísticas
+        function updateStats() {
+            let income = 0;
+            let expense = 0;
+
+            transactions.forEach(transaction => {
+                if (transaction.type === 'income') {
+                    income += transaction.amount;
+                } else {
+                    expense += transaction.amount;
+                }
+            });
+
+            const balance = income - expense;
+
+            // Atualizar estatísticas
+            totalIncomeElement.textContent = `R$ ${income.toFixed(2)}`;
+            totalExpenseElement.textContent = `R$ ${expense.toFixed(2)}`;
+            totalBalanceElement.textContent = `R$ ${balance.toFixed(2)}`;
+
+            // Atualizar cores do saldo
+            if (balance > 0) {
+                totalBalanceElement.classList.add('positive');
+                totalBalanceElement.classList.remove('negative');
+            } else if (balance < 0) {
+                totalBalanceElement.classList.add('negative');
+                totalBalanceElement.classList.remove('positive');
+            } else {
+                totalBalanceElement.classList.remove('positive', 'negative');
+            }
+
+            // Atualizar saúde financeira (se premium)
+            if (currentUser.plan !== 'free') {
+                updateHealthScore(income, expense, balance);
+            }
+        }
+
+        // Atualizar saúde financeira (função premium)
+        function updateHealthScore(income, expense, balance) {
+            const healthScoreElement = document.getElementById('healthScore');
+            const healthLabelElement = document.getElementById('healthLabel');
+            const healthDescriptionElement = document.getElementById('healthDescription');
+            const reserveTipElement = document.getElementById('reserveTip');
+            const debtTipElement = document.getElementById('debtTip');
+            const foodTipElement = document.getElementById('foodTip');
+
+            if (transactions.length === 0) {
+                healthScoreElement.textContent = '0.0';
+                healthLabelElement.textContent = 'Indisponível';
+                healthDescriptionElement.textContent = 'Adicione transações para calcular sua saúde financeira.';
+                return;
+            }
+
+            // Cálculo simplificado da pontuação
+            const savingsRate = income > 0 ? (balance / income) * 100 : 0;
+            let score = 5.0;
+
+            if (savingsRate > 20) score += 2.5;
+            else if (savingsRate > 10) score += 1.5;
+            else if (savingsRate > 0) score += 0.5;
+            else if (savingsRate < -10) score -= 2.0;
+
+            score = Math.max(0, Math.min(10, score));
+
+            healthScoreElement.textContent = score.toFixed(1);
+
+            if (score >= 8) healthLabelElement.textContent = 'Excelente';
+            else if (score >= 6) healthLabelElement.textContent = 'Boa';
+            else if (score >= 4) healthLabelElement.textContent = 'Regular';
+            else healthLabelElement.textContent = 'Preocupante';
+
+            const monthsReserve = expense > 0 ? Math.floor(balance / (expense / 12)) : 0;
+            reserveTipElement.textContent = `Você tem ${monthsReserve} meses de reserva de emergência.`;
+            debtTipElement.textContent = `Suas despesas consomem ${income > 0 ? ((expense / income) * 100).toFixed(1) : '0'}% da sua renda.`;
+        }
+
+        // Deletar transação
+        window.deleteTransaction = function (id) {
+            if (confirm('Tem certeza que deseja excluir esta transação?')) {
+                transactions = transactions.filter(transaction => transaction.id !== id);
+                saveTransactions(transactions);
+                renderTransactions();
+                updateStats();
+                updateCharts();
+                updateUserInfo();
+                showNotification('Transação excluída com sucesso!', 'success');
+            }
+        }
+
+        // Adicionar transação
+        transactionForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Verificar limite do plano gratuito
+            if (currentUser.plan === 'free' && transactions.length >= FREE_PLAN_LIMITS.maxTransactions) {
+                showNotification(`Você atingiu o limite de ${FREE_PLAN_LIMITS.maxTransactions} transações do plano gratuito. Assine o Premium para continuar.`, 'error');
+                return;
+            }
+
+            const description = document.getElementById('description').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const type = document.getElementById('type').value;
+            const category = document.getElementById('category').value;
+            const date = document.getElementById('date').value;
+
+            if (!description || !amount || !date || !category) {
+                showNotification('Por favor, preencha todos os campos.', 'error');
+                return;
+            }
+
+            if (amount <= 0) {
+                showNotification('O valor deve ser maior que zero.', 'error');
+                return;
+            }
+
+            const newTransaction = {
+                id: Date.now(),
+                description,
+                amount,
+                type,
+                category,
+                date
+            };
+
+            transactions.push(newTransaction);
+            saveTransactions(transactions);
+            renderTransactions();
+            updateStats();
+            updateCharts();
+            updateUserInfo();
+
+            showNotification('Transação adicionada com sucesso!', 'success');
+
+            // Limpar formulário
+            this.reset();
+            document.getElementById('date').valueAsDate = new Date();
+            document.getElementById('type').value = 'income';
+        });
+
+        // Atualizar gráficos
+        function updateCharts() {
+            // Dados para o gráfico de evolução
+            const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+            const monthlyIncome = Array(12).fill(0);
+            const monthlyExpense = Array(12).fill(0);
+
+            // Processar transações para o gráfico de evolução
+            transactions.forEach(transaction => {
+                const month = new Date(transaction.date).getMonth();
+
+                if (transaction.type === 'income') {
+                    monthlyIncome[month] += transaction.amount;
+                } else {
+                    monthlyExpense[month] += transaction.amount;
+                }
+            });
+
+            // Dados para o gráfico de distribuição
+            const categoryData = {};
+            const categories = currentUser.plan === 'free' ? freeCategories : premiumCategories;
+            categories.forEach(cat => categoryData[cat] = 0);
+
+            // Processar transações para o gráfico de distribuição
+            transactions.forEach(transaction => {
+                if (transaction.type === 'expense' && categoryData.hasOwnProperty(transaction.category)) {
+                    categoryData[transaction.category] += transaction.amount;
+                }
+            });
+
+            const expenseCategories = Object.keys(categoryData).map(cat => getCategoryName(cat));
+            const expenseData = Object.values(categoryData);
+
+            // Atualizar ou criar gráfico de evolução
+            const budgetCtx = document.getElementById('budgetChart').getContext('2d');
+
+            if (budgetChart) {
+                budgetChart.destroy();
+            }
+
+            budgetChart = new Chart(budgetCtx, {
+                type: 'bar',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Receita',
+                        data: monthlyIncome,
+                        backgroundColor: '#10b981',
+                        borderColor: '#10b981',
+                        borderWidth: 1
+                    }, {
+                        label: 'Despesa',
+                        data: monthlyExpense,
+                        backgroundColor: '#ef4444',
+                        borderColor: '#ef4444',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: '#94a3b8'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#94a3b8'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#f8fafc'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Atualizar ou criar gráfico de distribuição
+            const expensesCtx = document.getElementById('expensesChart').getContext('2d');
+
+            if (expensesChart) {
+                expensesChart.destroy();
+            }
+
+            expensesChart = new Chart(expensesCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: expenseCategories,
+                    datasets: [{
+                        data: expenseData,
+                        backgroundColor: [
+                            '#6366f1', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#94a3b8',
+                            '#3b82f6', '#ec4899', '#14b8a6', '#f97316', '#8b5cf6', '#84cc16'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#f8fafc',
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            localStorage.removeItem('financaplus_current_user');
+            window.location.href = 'index.html';
+        });
+
+        // Upgrade to Premium
+        window.upgradeToPremium = function () {
+            const paymentModal = document.getElementById('payment-modal');
+            paymentModal.style.display = 'flex';
+        }
+
+        // Processar pagamento
+        window.processPayment = function () {
+            const cardNumber = document.getElementById('card-number').value;
+            const cardExpiry = document.getElementById('card-expiry').value;
+            const cardCvv = document.getElementById('card-cvv').value;
+            const cardName = document.getElementById('card-name').value;
+
+            if (!cardNumber || !cardExpiry || !cardCvv || !cardName) {
+                showNotification('Por favor, preencha todos os campos do cartão.', 'error');
+                return;
+            }
+
+            // Simulação de processamento
+            setTimeout(() => {
+                // Atualizar usuário para premium
+                const userIndex = users.findIndex(u => u.id === currentUser.id);
+                if (userIndex !== -1) {
+                    users[userIndex].plan = 'premium';
+                    users[userIndex].premiumExpiry = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+                    localStorage.setItem('financaplus_users', JSON.stringify(users));
+
+                    currentUser = users[userIndex];
+                    localStorage.setItem('financaplus_current_user', JSON.stringify(users[userIndex]));
+
+                    // Atualizar interface imediatamente
+                    updateUserInfo();
+
+                    // Mostrar mensagem de sucesso
+                    showNotification('🎉 Parabéns! Você agora é um usuário Premium! Recursos desbloqueados.', 'success');
+                }
+
+                document.getElementById('payment-modal').style.display = 'none';
+
+            }, 1500);
+        }
+
+        // Fechar modal de pagamento
+        document.getElementById('close-payment-modal').addEventListener('click', function () {
+            document.getElementById('payment-modal').style.display = 'none';
+        });
+
+        // Fechar modal ao clicar fora
+        window.addEventListener('click', function (e) {
+            if (e.target === document.getElementById('payment-modal')) {
+                document.getElementById('payment-modal').style.display = 'none';
+            }
+        });
+
+        // Menu mobile
+        document.getElementById('mobileMenuBtn').addEventListener('click', function () {
+            document.getElementById('mainNav').classList.toggle('open');
+        });
+
+        // Scroll suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+
+                    // Fechar menu mobile se aberto
+                    document.getElementById('mainNav').classList.remove('open');
+                }
+            });
+        });
+
+        // Inicializar a aplicação
+        function initApp() {
+            if (!currentUser) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            updateUserInfo();
+            renderTransactions();
+            updateStats();
+            updateCharts();
+            checkPlanLimits();
+            
+            // Para debug
+            console.log('Usuário atual:', currentUser);
+            console.log('Categoria select encontrado?', !!document.getElementById('category'));
+        }
+
+        // Iniciar quando o DOM estiver carregado
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+
+</html>
