@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Finança+</title>
+    <title>Dashboard | FinSync</title>
     <meta name="description"
         content="Solução completa para controle financeiro pessoal. Organize sua renda, evite dívidas e alcance sua liberdade financeira.">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
@@ -135,7 +135,15 @@
         .user-info {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+            /* Aumentado de 10px */
+        }
+
+        .user-info>div {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            /* Espaço entre nome e plano */
         }
 
         .user-avatar {
@@ -156,6 +164,8 @@
             font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
+            /* Adicione margem se preferir */
+            /* margin-top: 2px; */
         }
 
         .user-plan.free {
@@ -187,6 +197,32 @@
         .btn-logout:hover {
             background: rgba(239, 68, 68, 0.2);
             color: var(--danger);
+        }
+
+        /* Botão Cancelar Premium */
+        .btn-premium-cancel {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: var(--danger);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            /* Adicione margem esquerda para separar do logout */
+            margin-left: 5px;
+        }
+
+        .btn-premium-cancel:hover {
+            background: rgba(239, 68, 68, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-premium-cancel i {
+            font-size: 16px;
         }
 
         nav {
@@ -908,12 +944,13 @@
         <div class="container">
             <div class="header-content">
                 <a href="index.html" class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
+                    <!-- Se sua imagem já é um logo bem desenhado -->
+                    <img src="imagens/WhatsApp_Image_2025-12-02_at_12.31.29-removebg-preview.png" alt="FinSync"
+                        style="height: 80px; margin-right: 15px;">
+
                     <div class="logo-text">
-                        <h1>Finança+</h1>
-                        <span>Controle financeiro inteligente</span>
+                        <h1>FinSync</h1>
+                        <span>Sincronize suas finanças</span>
                     </div>
                 </a>
 
@@ -933,6 +970,10 @@
                         <button class="btn-logout" id="logoutBtn">
                             <i class="fas fa-sign-out-alt"></i>
                             Sair
+                        </button>
+                        <button class="btn-premium-cancel" id="cancelPremiumBtn" style="display: none;">
+                            <i class="fas fa-times-circle"></i>
+                            Cancelar Premium
                         </button>
                     </div>
                 </nav>
@@ -1074,10 +1115,48 @@
                     </div>
 
                     <div class="health-score-content">
-                        <div class="score-circle" style="margin: 0 auto 30px;">
-                            <div class="score-inner">
-                                <div class="score-value" id="healthScore">0.0</div>
-                                <div class="score-label" id="healthLabel">Indisponível</div>
+                        <!-- Gráfico de Saúde Financeira -->
+                        <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 30px;">
+                            <div style="position: relative; width: 250px; height: 125px; margin-bottom: 20px;">
+                                <canvas id="healthScoreChart"></canvas>
+                                <div style="position: absolute; bottom: -30px; left: 0; right: 0; text-align: center;">
+                                    <div style="font-size: 2.5rem; font-weight: 700; color: var(--text);"
+                                        id="healthScoreValue">0.0</div>
+                                    <div style="font-size: 1rem; color: var(--text-muted);" id="healthScoreLabel">
+                                        Indisponível</div>
+                                </div>
+                            </div>
+
+                            <div
+                                style="display: flex; justify-content: space-between; width: 100%; max-width: 400px; margin-top: 20px;">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 0.8rem; color: var(--text-muted);">Crítico</div>
+                                    <div
+                                        style="width: 20px; height: 5px; background: linear-gradient(to right, #ef4444, #f59e0b); border-radius: 3px; margin: 5px auto;">
+                                    </div>
+                                    <div style="font-size: 0.8rem;">0-3.9</div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 0.8rem; color: var(--text-muted);">Regular</div>
+                                    <div
+                                        style="width: 20px; height: 5px; background: #f59e0b; border-radius: 3px; margin: 5px auto;">
+                                    </div>
+                                    <div style="font-size: 0.8rem;">4.0-5.9</div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 0.8rem; color: var(--text-muted);">Bom</div>
+                                    <div
+                                        style="width: 20px; height: 5px; background: #10b981; border-radius: 3px; margin: 5px auto;">
+                                    </div>
+                                    <div style="font-size: 0.8rem;">6.0-7.9</div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 0.8rem; color: var(--text-muted);">Excelente</div>
+                                    <div
+                                        style="width: 20px; height: 5px; background: #06d6a0; border-radius: 3px; margin: 5px auto;">
+                                    </div>
+                                    <div style="font-size: 0.8rem;">8.0-10</div>
+                                </div>
                             </div>
                         </div>
 
@@ -1088,23 +1167,48 @@
                             style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px;">
                             <div class="health-tip"
                                 style="background: var(--gradient-card); border-radius: 10px; padding: 20px;">
-                                <i class="fas fa-piggy-bank"></i>
-                                <h4>Reserva de Emergência</h4>
-                                <p id="reserveTip">Adicione suas receitas e despesas para calcular sua reserva de
-                                    emergência.</p>
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                    <div
+                                        style="width: 40px; height: 40px; border-radius: 10px; background: rgba(16, 185, 129, 0.2); display: flex; align-items: center; justify-content: center; color: var(--success);">
+                                        <i class="fas fa-piggy-bank"></i>
+                                    </div>
+                                    <div>
+                                        <h4 style="margin: 0;">Reserva de Emergência</h4>
+                                        <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;"
+                                            id="reserveMonths">0 meses</p>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.9rem;" id="reserveTip">Adicione transações para calcular.</p>
                             </div>
                             <div class="health-tip"
                                 style="background: var(--gradient-card); border-radius: 10px; padding: 20px;">
-                                <i class="fas fa-chart-line"></i>
-                                <h4>Dívidas</h4>
-                                <p id="debtTip">Adicione transações para analisar suas dívidas.</p>
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                    <div
+                                        style="width: 40px; height: 40px; border-radius: 10px; background: rgba(239, 68, 68, 0.2); display: flex; align-items: center; justify-content: center; color: var(--danger);">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div>
+                                        <h4 style="margin: 0;">Dívidas</h4>
+                                        <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;"
+                                            id="debtPercentage">0%</p>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.9rem;" id="debtTip">Adicione transações para analisar.</p>
                             </div>
                             <div class="health-tip"
                                 style="background: var(--gradient-card); border-radius: 10px; padding: 20px;">
-                                <i class="fas fa-utensils"></i>
-                                <h4>Alimentação</h4>
-                                <p id="foodTip">Adicione transações de alimentação para receber dicas personalizadas.
-                                </p>
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                    <div
+                                        style="width: 40px; height: 40px; border-radius: 10px; background: rgba(245, 158, 11, 0.2); display: flex; align-items: center; justify-content: center; color: var(--accent);">
+                                        <i class="fas fa-utensils"></i>
+                                    </div>
+                                    <div>
+                                        <h4 style="margin: 0;">Alimentação</h4>
+                                        <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;"
+                                            id="foodPercentage">0%</p>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.9rem;" id="foodTip">Adicione transações de alimentação.</p>
                             </div>
                         </div>
                     </div>
@@ -1170,12 +1274,29 @@
                                         <div style="width: 20%; height: 100%; background: var(--success);"></div>
                                     </div>
                                 </div>
+
+                                <div
+                                    style="margin-top: 20px; padding: 15px; background: rgba(15, 23, 42, 0.3); border-radius: 10px;">
+                                    <p style="font-size: 0.9rem; color: var(--text-muted);">
+                                        <strong>Método 50/30/20:</strong> 50% para necessidades, 30% para desejos e 20%
+                                        para poupança/investimentos.
+                                    </p>
+                                </div>
                             </div>
 
                             <div>
-                                <h4 style="margin-bottom: 15px;">Sua Distribuição</h4>
-                                <div id="currentDistributionChart" style="height: 200px;">
-                                    <!-- Gráfico será inserido aqui -->
+                                <h4 style="margin-bottom: 15px; text-align: center;">Sua Distribuição</h4>
+                                <div
+                                    style="height: 250px; display: flex; justify-content: center; align-items: center;">
+                                    <canvas id="distributionChart"></canvas>
+                                </div>
+                                <div style="text-align: center; margin-top: 15px;">
+                                    <div id="actualNeeds" style="font-size: 0.9rem; color: var(--text-muted);">
+                                        Necessidades: 0%</div>
+                                    <div id="actualWants" style="font-size: 0.9rem; color: var(--text-muted);">Desejos:
+                                        0%</div>
+                                    <div id="actualSavings" style="font-size: 0.9rem; color: var(--text-muted);">
+                                        Poupança: 0%</div>
                                 </div>
                             </div>
                         </div>
@@ -1183,7 +1304,19 @@
                         <div style="background: rgba(15, 23, 42, 0.5); border-radius: 10px; padding: 20px;">
                             <h4 style="margin-bottom: 15px;">Recomendações Personalizadas</h4>
                             <div id="plannerRecommendations">
-                                <p>Adicione suas receitas para receber recomendações personalizadas.</p>
+                                <p>Adicione suas receitas e despesas para receber recomendações personalizadas.</p>
+                            </div>
+
+                            <div id="plannerProgress" style="margin-top: 20px; display: none;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <span>Progresso do Planejamento</span>
+                                    <span id="planProgressPercent">0%</span>
+                                </div>
+                                <div
+                                    style="height: 8px; background: var(--text-muted); border-radius: 4px; overflow: hidden;">
+                                    <div id="planProgressBar"
+                                        style="width: 0%; height: 100%; background: var(--success);"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1295,10 +1428,18 @@
                 <div>
                     <button class="btn"
                         style="background: white; color: #f59e0b; font-size: 1.2rem; padding: 15px 40px;"
-                        onclick="upgradeToPremium()">
+                        onclick="upgradeToPremium()" id="upgradeBtn">
                         <i class="fas fa-crown"></i>
                         Tornar-se Premium por R$ 29,90/mês
                     </button>
+
+                    <button class="btn"
+                        style="background: rgba(255, 255, 255, 0.1); color: white; font-size: 1rem; padding: 12px 30px; margin-top: 15px;"
+                        onclick="cancelPremiumSubscription()" id="cancelInSectionBtn" style="display: none;">
+                        <i class="fas fa-times-circle"></i>
+                        Cancelar Assinatura Premium
+                    </button>
+
                     <p style="margin-top: 15px; font-size: 14px; opacity: 0.9;">
                         Cancele a qualquer momento • 7 dias de garantia
                     </p>
@@ -1313,29 +1454,44 @@
             <div class="footer-content">
                 <div class="footer-column">
                     <a href="index.html" class="logo">
-                        <div class="logo-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
+                        <!-- Remova o div .logo-icon e coloque a imagem direta -->
+                        <img src="imagens/WhatsApp_Image_2025-12-02_at_12.31.29-removebg-preview.png" alt="FinSync Logo"
+                            style="width: 60px; height: 60px;">
                         <div class="logo-text">
-                            <h1>Finança+</h1>
-                            <span>Controle financeiro inteligente</span>
+                            <h1>FinSync</h1>
+                            <span>Sincronize suas finanças</span>
                         </div>
                     </a>
-                    <p class="mt-20">Tome controle da sua vida financeira com ferramentas poderosas e insights
-                        inteligentes.</p>
+                    <p class="mt-20">Sincronize sua vida financeira com ferramentas poderosas e insights inteligentes.
+                    </p>
+
                     <div class="social-links">
-                        <a href="#" class="social-link">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link">
+                        <a href="https://www.instagram.com/finsync_oficial?igsh=OTJvdXh2dXpyaTdp" class="social-link"
+                            target="_blank" title="Siga-nos no Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="social-link">
+                        <a href="#" class="social-link" title="Siga-nos no Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Siga-nos no Twitter/X">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Conecte-se no LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
+                    </div>
+
+                    <div class="mt-20"
+                        style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px; border-left: 4px solid #E4405F;">
+                        <p style="margin: 0; font-size: 14px; color: var(--text-muted);">
+                            <i class="fab fa-instagram" style="color: #E4405F;"></i>
+                            <strong>Siga nosso Instagram:</strong>
+                            <br>
+                            <a href="https://www.instagram.com/finsync_oficial?igsh=OTJvdXh2dXpyaTdp" target="_blank"
+                                style="color: var(--primary); text-decoration: none; font-weight: 600;">
+                                @finsync_oficial
+                            </a>
+                        </p>
                     </div>
                 </div>
 
@@ -1371,7 +1527,12 @@
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2023 Finança+. Todos os direitos reservados.</p>
+                <p>&copy; 2025 FinSync. Todos os direitos reservados. |
+                    <a href="https://www.instagram.com/finsync_oficial?igsh=OTJvdXh2dXpyaTdp" target="_blank"
+                        style="color: var(--text-muted); text-decoration: none;">
+                        <i class="fab fa-instagram"></i> @finsync_oficial
+                    </a>
+                </p>
             </div>
         </div>
     </footer>
@@ -1467,8 +1628,13 @@
         const coursesRestrictedOverlay = document.getElementById('coursesRestrictedOverlay');
         const premiumSection = document.getElementById('premium');
 
+        // Botões de cancelamento
+        const cancelPremiumBtn = document.getElementById('cancelPremiumBtn');
+        const cancelInSectionBtn = document.getElementById('cancelInSectionBtn');
+        const upgradeBtn = document.getElementById('upgradeBtn');
+
         // Gráficos
-        let budgetChart, expensesChart;
+        let budgetChart, expensesChart, healthScoreChart, distributionChart;
 
         // Categorias disponíveis por plano
         const freeCategories = ['salary', 'housing', 'food', 'transport', 'entertainment', 'health', 'other'];
@@ -1550,6 +1716,11 @@
                 // Mostrar seção de upgrade
                 premiumSection.style.display = 'block';
 
+                // Esconder botões de cancelamento, mostrar botão de upgrade
+                if (cancelPremiumBtn) cancelPremiumBtn.style.display = 'none';
+                if (cancelInSectionBtn) cancelInSectionBtn.style.display = 'none';
+                if (upgradeBtn) upgradeBtn.style.display = 'block';
+
                 planLimitInfo.innerHTML = `
                     <span style="color: var(--text-muted); font-size: 14px;">
                         ${transactions.length}/${FREE_PLAN_LIMITS.maxTransactions} transações
@@ -1571,7 +1742,7 @@
                 welcomeBanner.innerHTML = `
                     <div class="welcome-text">
                         <h2>Olá, ${currentUser.name}!</h2>
-                        <p>Bem-vindo(a) ao Finança+ Premium. Aproveite todos os recursos exclusivos.</p>
+                        <p>Bem-vindo(a) ao FinSync Premium. Aproveite todos os recursos exclusivos.</p>
                     </div>
                     <div style="padding: 15px 25px; background: rgba(16, 185, 129, 0.2); border-radius: 12px; color: var(--success); font-weight: 600;">
                         <i class="fas fa-crown"></i>
@@ -1579,8 +1750,13 @@
                     </div>
                 `;
 
-                // ESCONDER A SEÇÃO DE UPGRADE (BANNER DE PROMOÇÃO)
-                premiumSection.style.display = 'none';
+                // Manter seção de upgrade visível para mostrar opção de cancelamento
+                premiumSection.style.display = 'block';
+
+                // Mostrar botões de cancelamento, esconder botão de upgrade
+                if (cancelPremiumBtn) cancelPremiumBtn.style.display = 'flex';
+                if (cancelInSectionBtn) cancelInSectionBtn.style.display = 'block';
+                if (upgradeBtn) upgradeBtn.style.display = 'none';
 
                 planLimitInfo.innerHTML = `
                     <span style="color: var(--success); font-size: 14px;">
@@ -1613,7 +1789,7 @@
                 console.error('Elemento #category não encontrado!');
                 return;
             }
-            
+
             // Determinar quais categorias mostrar
             let categories;
             if (currentUser.plan === 'free') {
@@ -1818,49 +1994,323 @@
                 totalBalanceElement.classList.remove('positive', 'negative');
             }
 
-            // Atualizar saúde financeira (se premium)
+            // Atualizar saúde financeira e planejador (se premium)
             if (currentUser.plan !== 'free') {
                 updateHealthScore(income, expense, balance);
+                updateFinancialPlanner(income, expense, balance);
             }
         }
 
         // Atualizar saúde financeira (função premium)
         function updateHealthScore(income, expense, balance) {
-            const healthScoreElement = document.getElementById('healthScore');
-            const healthLabelElement = document.getElementById('healthLabel');
+            const healthScoreValue = document.getElementById('healthScoreValue');
+            const healthScoreLabel = document.getElementById('healthScoreLabel');
             const healthDescriptionElement = document.getElementById('healthDescription');
             const reserveTipElement = document.getElementById('reserveTip');
             const debtTipElement = document.getElementById('debtTip');
             const foodTipElement = document.getElementById('foodTip');
+            const reserveMonthsElement = document.getElementById('reserveMonths');
+            const debtPercentageElement = document.getElementById('debtPercentage');
+            const foodPercentageElement = document.getElementById('foodPercentage');
 
             if (transactions.length === 0) {
-                healthScoreElement.textContent = '0.0';
-                healthLabelElement.textContent = 'Indisponível';
+                healthScoreValue.textContent = '0.0';
+                healthScoreLabel.textContent = 'Indisponível';
                 healthDescriptionElement.textContent = 'Adicione transações para calcular sua saúde financeira.';
+                reserveMonthsElement.textContent = '0 meses';
+                debtPercentageElement.textContent = '0%';
+                foodPercentageElement.textContent = '0%';
+                updateHealthScoreChart(0);
                 return;
             }
 
-            // Cálculo simplificado da pontuação
+            // Cálculo da pontuação
             const savingsRate = income > 0 ? (balance / income) * 100 : 0;
-            let score = 5.0;
+            let score = 5.0; // Pontuação base
 
+            // Fatores que influenciam a pontuação
             if (savingsRate > 20) score += 2.5;
             else if (savingsRate > 10) score += 1.5;
             else if (savingsRate > 0) score += 0.5;
             else if (savingsRate < -10) score -= 2.0;
 
+            // Limitar entre 0 e 10
             score = Math.max(0, Math.min(10, score));
 
-            healthScoreElement.textContent = score.toFixed(1);
+            healthScoreValue.textContent = score.toFixed(1);
 
-            if (score >= 8) healthLabelElement.textContent = 'Excelente';
-            else if (score >= 6) healthLabelElement.textContent = 'Boa';
-            else if (score >= 4) healthLabelElement.textContent = 'Regular';
-            else healthLabelElement.textContent = 'Preocupante';
+            // Determinar label baseado na pontuação
+            let label, color;
+            if (score >= 8) {
+                label = 'Excelente';
+                color = '#06d6a0';
+            } else if (score >= 6) {
+                label = 'Bom';
+                color = '#10b981';
+            } else if (score >= 4) {
+                label = 'Regular';
+                color = '#f59e0b';
+            } else {
+                label = 'Crítico';
+                color = '#ef4444';
+            }
 
+            healthScoreLabel.textContent = label;
+            healthScoreLabel.style.color = color;
+
+            // Calcular métricas
             const monthsReserve = expense > 0 ? Math.floor(balance / (expense / 12)) : 0;
-            reserveTipElement.textContent = `Você tem ${monthsReserve} meses de reserva de emergência.`;
-            debtTipElement.textContent = `Suas despesas consomem ${income > 0 ? ((expense / income) * 100).toFixed(1) : '0'}% da sua renda.`;
+            const debtRate = income > 0 ? ((expense / income) * 100) : 0;
+
+            // Calcular porcentagem de gastos com alimentação
+            let foodExpense = 0;
+            transactions.forEach(transaction => {
+                if (transaction.type === 'expense' && transaction.category === 'food') {
+                    foodExpense += transaction.amount;
+                }
+            });
+            const foodRate = expense > 0 ? ((foodExpense / expense) * 100) : 0;
+
+            // Atualizar textos
+            reserveMonthsElement.textContent = `${monthsReserve} meses`;
+            debtPercentageElement.textContent = `${debtRate.toFixed(1)}%`;
+            foodPercentageElement.textContent = `${foodRate.toFixed(1)}%`;
+
+            reserveTipElement.textContent = monthsReserve >= 3
+                ? `Excelente! Você tem uma reserva de emergência saudável.`
+                : monthsReserve > 0
+                    ? `Considere aumentar sua reserva para pelo menos 3 meses.`
+                    : `Priorize criar uma reserva de emergência de 3 meses.`;
+
+            debtTipElement.textContent = debtRate <= 50
+                ? `Suas despesas estão dentro de um nível saudável.`
+                : debtRate <= 70
+                    ? `Suas despesas estão altas. Considere reduzir gastos.`
+                    : `Atenção! Suas despesas estão muito altas.`;
+
+            foodTipElement.textContent = foodRate <= 25
+                ? `Seus gastos com alimentação estão dentro do recomendado.`
+                : foodRate <= 35
+                    ? `Seus gastos com alimentação estão um pouco altos.`
+                    : `Seus gastos com alimentação estão acima do recomendado.`;
+
+            // Atualizar gráfico
+            updateHealthScoreChart(score, color);
+        }
+
+        // Atualizar gráfico de saúde financeira
+        function updateHealthScoreChart(score, color = '#6366f1') {
+            const ctx = document.getElementById('healthScoreChart').getContext('2d');
+
+            // Destruir gráfico anterior se existir
+            if (healthScoreChart) {
+                healthScoreChart.destroy();
+            }
+
+            // Calcular ângulo baseado na pontuação (0-10 para 0-180 graus)
+            const angle = (score / 10) * Math.PI;
+
+            healthScoreChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [score, 10 - score],
+                        backgroundColor: [color, 'rgba(255, 255, 255, 0.1)'],
+                        borderWidth: 0,
+                        circumference: 180,
+                        rotation: 270
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // Atualizar planejador financeiro (função premium)
+        function updateFinancialPlanner(income, expense, balance) {
+            const needsAmount = document.getElementById('needsAmount');
+            const wantsAmount = document.getElementById('wantsAmount');
+            const savingsAmount = document.getElementById('savingsAmount');
+            const plannerRecommendations = document.getElementById('plannerRecommendations');
+            const actualNeeds = document.getElementById('actualNeeds');
+            const actualWants = document.getElementById('actualWants');
+            const actualSavings = document.getElementById('actualSavings');
+            const plannerProgress = document.getElementById('plannerProgress');
+            const planProgressPercent = document.getElementById('planProgressPercent');
+            const planProgressBar = document.getElementById('planProgressBar');
+
+            if (income <= 0) {
+                needsAmount.textContent = 'R$ 0,00';
+                wantsAmount.textContent = 'R$ 0,00';
+                savingsAmount.textContent = 'R$ 0,00';
+                plannerRecommendations.innerHTML = '<p>Adicione suas receitas para receber recomendações personalizadas.</p>';
+                actualNeeds.textContent = 'Necessidades: 0%';
+                actualWants.textContent = 'Desejos: 0%';
+                actualSavings.textContent = 'Poupança: 0%';
+                plannerProgress.style.display = 'none';
+                updateDistributionChart(0, 0, 0);
+                return;
+            }
+
+            // Calcular valores ideais baseados no método 50/30/20
+            const idealNeeds = income * 0.5;
+            const idealWants = income * 0.3;
+            const idealSavings = income * 0.2;
+
+            needsAmount.textContent = `R$ ${idealNeeds.toFixed(2)}`;
+            wantsAmount.textContent = `R$ ${idealWants.toFixed(2)}`;
+            savingsAmount.textContent = `R$ ${idealSavings.toFixed(2)}`;
+
+            // Calcular distribuição real
+            // Para simplificar, vamos considerar:
+            // - Necessidades: categorias housing, food, transport, health
+            // - Desejos: entertainment, shopping, travel
+            // - Poupança: investments + saldo positivo
+
+            let actualNeedsValue = 0;
+            let actualWantsValue = 0;
+            let investmentsValue = 0;
+
+            transactions.forEach(transaction => {
+                if (transaction.type === 'expense') {
+                    const category = transaction.category;
+                    const amount = transaction.amount;
+
+                    if (['housing', 'food', 'transport', 'health', 'insurance', 'taxes'].includes(category)) {
+                        actualNeedsValue += amount;
+                    } else if (['entertainment', 'shopping', 'travel', 'subscriptions'].includes(category)) {
+                        actualWantsValue += amount;
+                    } else if (category === 'investments') {
+                        investmentsValue += amount;
+                    } else {
+                        actualNeedsValue += amount; // Outros como necessidades por padrão
+                    }
+                }
+            });
+
+            const actualSavingsValue = investmentsValue + Math.max(0, balance);
+            const totalExpenses = actualNeedsValue + actualWantsValue + actualSavingsValue;
+
+            // Calcular porcentagens
+            const needsPercent = totalExpenses > 0 ? (actualNeedsValue / totalExpenses) * 100 : 0;
+            const wantsPercent = totalExpenses > 0 ? (actualWantsValue / totalExpenses) * 100 : 0;
+            const savingsPercent = totalExpenses > 0 ? (actualSavingsValue / totalExpenses) * 100 : 0;
+
+            // Atualizar textos
+            actualNeeds.textContent = `Necessidades: ${needsPercent.toFixed(1)}%`;
+            actualWants.textContent = `Desejos: ${wantsPercent.toFixed(1)}%`;
+            actualSavings.textContent = `Poupança: ${savingsPercent.toFixed(1)}%`;
+
+            // Atualizar gráfico
+            updateDistributionChart(needsPercent, wantsPercent, savingsPercent);
+
+            // Gerar recomendações
+            let recommendations = '';
+
+            if (needsPercent > 55) {
+                recommendations += `<p><i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i> Suas necessidades estão altas (${needsPercent.toFixed(1)}%). Considere reduzir gastos essenciais.</p>`;
+            } else if (needsPercent < 45) {
+                recommendations += `<p><i class="fas fa-check-circle" style="color: var(--success);"></i> Boa! Suas necessidades estão dentro do recomendado (${needsPercent.toFixed(1)}%).</p>`;
+            } else {
+                recommendations += `<p><i class="fas fa-check" style="color: var(--success);"></i> Suas necessidades estão próximas do ideal (${needsPercent.toFixed(1)}%).</p>`;
+            }
+
+            if (wantsPercent > 35) {
+                recommendations += `<p><i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i> Seus desejos estão acima do recomendado (${wantsPercent.toFixed(1)}%). Considere cortar gastos não essenciais.</p>`;
+            } else if (wantsPercent < 25) {
+                recommendations += `<p><i class="fas fa-check-circle" style="color: var(--success);"></i> Excelente! Você está economizando nos desejos (${wantsPercent.toFixed(1)}%).</p>`;
+            } else {
+                recommendations += `<p><i class="fas fa-check" style="color: var(--success);"></i> Seus desejos estão dentro do esperado (${wantsPercent.toFixed(1)}%).</p>`;
+            }
+
+            if (savingsPercent < 15) {
+                recommendations += `<p><i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i> Sua poupança está baixa (${savingsPercent.toFixed(1)}%). Tente aumentar para pelo menos 20%.</p>`;
+            } else if (savingsPercent >= 20) {
+                recommendations += `<p><i class="fas fa-check-circle" style="color: var(--success);"></i> Parabéns! Sua poupança está excelente (${savingsPercent.toFixed(1)}%).</p>`;
+            } else {
+                recommendations += `<p><i class="fas fa-check" style="color: var(--success);"></i> Sua poupança está próxima da meta (${savingsPercent.toFixed(1)}%).</p>`;
+            }
+
+            // Calcular progresso em relação ao ideal
+            const needsScore = Math.max(0, 100 - Math.abs(needsPercent - 50) * 2);
+            const wantsScore = Math.max(0, 100 - Math.abs(wantsPercent - 30) * 3.33);
+            const savingsScore = Math.max(0, savingsPercent * 5); // 20% = 100 pontos
+
+            const totalScore = (needsScore + wantsScore + savingsScore) / 3;
+
+            plannerRecommendations.innerHTML = recommendations;
+            plannerProgress.style.display = 'block';
+            planProgressPercent.textContent = `${totalScore.toFixed(0)}%`;
+            planProgressBar.style.width = `${totalScore}%`;
+
+            // Cor baseada no progresso
+            if (totalScore >= 80) {
+                planProgressBar.style.background = 'var(--success)';
+            } else if (totalScore >= 60) {
+                planProgressBar.style.background = 'var(--warning)';
+            } else {
+                planProgressBar.style.background = 'var(--danger)';
+            }
+        }
+
+        // Atualizar gráfico de distribuição
+        function updateDistributionChart(needsPercent, wantsPercent, savingsPercent) {
+            const ctx = document.getElementById('distributionChart').getContext('2d');
+
+            // Destruir gráfico anterior se existir
+            if (distributionChart) {
+                distributionChart.destroy();
+            }
+
+            distributionChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Necessidades', 'Desejos', 'Poupança'],
+                    datasets: [{
+                        data: [needsPercent, wantsPercent, savingsPercent],
+                        backgroundColor: [
+                            'var(--primary)',
+                            'var(--secondary)',
+                            'var(--success)'
+                        ],
+                        borderWidth: 2,
+                        borderColor: 'var(--dark-card)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: 'var(--text)',
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return `${context.label}: ${context.parsed.toFixed(1)}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         }
 
         // Deletar transação
@@ -2102,6 +2552,96 @@
             }, 1500);
         }
 
+        // Função para cancelar assinatura premium
+        window.cancelPremiumSubscription = function () {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 3000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                backdrop-filter: blur(5px);
+            `;
+
+            modal.innerHTML = `
+                <div style="background: var(--gradient-card); border-radius: 15px; padding: 30px; width: 90%; max-width: 500px; border: 1px solid var(--glass-border);">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(239, 68, 68, 0.2); display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; color: var(--danger); font-size: 24px;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h3 style="margin-bottom: 10px;">Cancelar Assinatura Premium</h3>
+                        <p style="color: var(--text-muted);">
+                            Tem certeza que deseja cancelar? Você perderá acesso imediato a:
+                        </p>
+                        <ul style="text-align: left; margin: 15px 0; padding-left: 20px; color: var(--text-muted);">
+                            <li>Saúde Financeira Avançada</li>
+                            <li>Planejador 30/50/20</li>
+                            <li>Cursos Exclusivos</li>
+                            <li>Transações Ilimitadas</li>
+                            <li>+15 Categorias</li>
+                        </ul>
+                        <p style="color: var(--text-muted); font-size: 14px;">
+                            Você voltará para o plano gratuito com limite de 50 transações.
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button id="confirmCancel" style="flex: 1; background: var(--danger); color: white; padding: 12px; border-radius: 10px; border: none; cursor: pointer; font-weight: 600;">
+                            Sim, Cancelar Premium
+                        </button>
+                        <button id="cancelCancel" style="flex: 1; background: var(--glass); color: var(--text); padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border); cursor: pointer; font-weight: 600;">
+                            Manter Premium
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            modal.querySelector('#confirmCancel').addEventListener('click', function () {
+                // Executar cancelamento
+                const userIndex = users.findIndex(u => u.id === currentUser.id);
+                if (userIndex !== -1) {
+                    users[userIndex].plan = 'free';
+                    users[userIndex].premiumExpiry = null;
+                    localStorage.setItem('financaplus_users', JSON.stringify(users));
+
+                    currentUser = users[userIndex];
+                    localStorage.setItem('financaplus_current_user', JSON.stringify(users[userIndex]));
+
+                    updateUserInfo();
+                    updateStats();
+                    updateCharts();
+                    checkPlanLimits();
+
+                    showNotification('Assinatura Premium cancelada. Você voltou para o plano gratuito.', 'info');
+                }
+
+                modal.remove();
+            });
+
+            modal.querySelector('#cancelCancel').addEventListener('click', function () {
+                modal.remove();
+            });
+
+            // Fechar ao clicar fora
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+
+        // Evento para o botão de cancelamento no header
+        document.getElementById('cancelPremiumBtn')?.addEventListener('click', function () {
+            cancelPremiumSubscription();
+        });
+
         // Fechar modal de pagamento
         document.getElementById('close-payment-modal').addEventListener('click', function () {
             document.getElementById('payment-modal').style.display = 'none';
@@ -2151,8 +2691,15 @@
             renderTransactions();
             updateStats();
             updateCharts();
+            updateHealthScoreChart(0);
+
+            // Inicializar gráfico de distribuição vazio
+            if (currentUser.plan !== 'free') {
+                updateDistributionChart(0, 0, 0);
+            }
+
             checkPlanLimits();
-            
+
             // Para debug
             console.log('Usuário atual:', currentUser);
             console.log('Categoria select encontrado?', !!document.getElementById('category'));

@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FinSync | Controle Financeiro Inteligente</title>
-    <meta name="description" content="Solução completa para controle financeiro pessoal. Organize sua renda, evite dívidas e alcance sua liberdade financeira com o FinSync.">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="description"
+        content="Solução completa para controle financeiro pessoal. Organize sua renda, evite dívidas e alcance sua liberdade financeira com o FinSync.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -138,7 +141,8 @@
             transition: all 0.3s ease;
         }
 
-        .nav-link:hover, .nav-link.active {
+        .nav-link:hover,
+        .nav-link.active {
             color: var(--text);
             background: var(--glass);
         }
@@ -713,7 +717,7 @@
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
-            
+
             .footer-content {
                 grid-template-columns: 1fr 1fr;
             }
@@ -723,47 +727,47 @@
             .header-content {
                 flex-wrap: wrap;
             }
-            
+
             nav {
                 display: none;
                 width: 100%;
                 flex-direction: column;
                 margin-top: 20px;
             }
-            
+
             nav.open {
                 display: flex;
             }
-            
+
             .mobile-menu-btn {
                 display: block;
             }
-            
+
             .hero-text-landing h2 {
                 font-size: 2.5rem;
             }
-            
+
             .hero-actions-landing {
                 flex-direction: column;
             }
-            
+
             .btn {
                 width: 100%;
                 justify-content: center;
             }
-            
+
             .social-auth {
                 grid-template-columns: 1fr;
             }
-            
+
             .pricing-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .pricing-card.popular {
                 transform: none;
             }
-            
+
             .pricing-card.popular:hover {
                 transform: translateY(-5px);
             }
@@ -773,7 +777,7 @@
             .footer-content {
                 grid-template-columns: 1fr;
             }
-            
+
             .auth-container {
                 padding: 30px 20px;
             }
@@ -781,56 +785,102 @@
 
         /* Animations */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .fade-in {
             animation: fadeIn 0.6s ease forwards;
         }
 
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+
+        .delay-4 {
+            animation-delay: 0.4s;
+        }
 
         /* Utility Classes */
-        .text-center { text-align: center; }
-        .mb-0 { margin-bottom: 0; }
-        .mt-0 { margin-top: 0; }
-        .mb-10 { margin-bottom: 10px; }
-        .mb-20 { margin-bottom: 20px; }
-        .mb-30 { margin-bottom: 30px; }
-        .mt-20 { margin-top: 20px; }
-        .mt-30 { margin-top: 30px; }
-        .mt-50 { margin-top: 50px; }
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-0 {
+            margin-bottom: 0;
+        }
+
+        .mt-0 {
+            margin-top: 0;
+        }
+
+        .mb-10 {
+            margin-bottom: 10px;
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+
+        .mb-30 {
+            margin-bottom: 30px;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        .mt-30 {
+            margin-top: 30px;
+        }
+
+        .mt-50 {
+            margin-top: 50px;
+        }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
-                <a href="imagens/WhatsApp Image 2025-12-02 at 12.31.29.jpeg" class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
+                <a href="index.html" class="logo">
+                    <!-- Se sua imagem já é um logo bem desenhado -->
+                    <img src="imagens/WhatsApp_Image_2025-12-02_at_12.31.29-removebg-preview.png" alt="FinSync"
+                        style="height: 80px; margin-right: 15px;">
+
                     <div class="logo-text">
                         <h1>FinSync</h1>
-                        <span>Controle financeiro inteligente</span>
+                        <span>Sincronize suas finanças</span>
                     </div>
                 </a>
-                
+
                 <button class="mobile-menu-btn" id="mobileMenuBtn">
                     <i class="fas fa-bars"></i>
                 </button>
-                
+
                 <nav id="mainNav">
                     <a href="#home" class="nav-link active">Início</a>
                     <a href="#como-funciona" class="nav-link">Como Funciona</a>
                     <a href="#recursos" class="nav-link">Recursos</a>
                     <a href="#planos" class="nav-link">Planos</a>
-                    <a href="dashboard.html" class="nav-link nav-cta" id="login-btn">Login</a>
+                    
                     <a href="#planos" class="nav-link nav-premium">Experimente Premium</a>
                 </nav>
             </div>
@@ -843,8 +893,9 @@
             <div class="hero-content-landing">
                 <div class="hero-text-landing fade-in">
                     <h2>Controle total sobre suas finanças</h2>
-                    <p>O Finança+ é a solução completa para organizar sua renda, evitar dívidas e alcançar sua liberdade financeira com inteligência e simplicidade.</p>
-                    
+                    <p>O FinSync é a solução completa para organizar sua renda, evitar dívidas e alcançar sua liberdade
+                        financeira com inteligência e simplicidade.</p>
+
                     <div class="hero-actions-landing">
                         <button class="btn btn-primary" id="cta-register-btn">
                             <i class="fas fa-rocket"></i>
@@ -855,7 +906,7 @@
                             Conhecer Premium
                         </a>
                     </div>
-                    
+
                     <div class="stats-preview">
                         <div class="stat-item">
                             <h3>50.000+</h3>
@@ -871,14 +922,14 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="hero-auth fade-in delay-1">
                     <div class="auth-container">
                         <div class="auth-tabs">
                             <div class="auth-tab active" id="login-tab-btn">Login</div>
                             <div class="auth-tab" id="register-tab-btn">Cadastro</div>
                         </div>
-                        
+
                         <div id="login-form">
                             <div class="form-group">
                                 <label class="form-label" for="login-email">E-mail</label>
@@ -888,20 +939,20 @@
                                 <label class="form-label" for="login-password">Senha</label>
                                 <input type="password" id="login-password" class="form-control" placeholder="Sua senha">
                             </div>
-                            
+
                             <div class="forgot-password">
                                 <a href="#" id="forgot-password-link">Esqueci minha senha</a>
                             </div>
-                            
+
                             <button class="btn btn-primary" id="login-submit" style="width: 100%;">
                                 <i class="fas fa-sign-in-alt"></i>
                                 Entrar na Conta
                             </button>
-                            
+
                             <div class="auth-divider">
                                 <span>ou entre com</span>
                             </div>
-                            
+
                             <div class="social-auth">
                                 <button class="btn-social google">
                                     <i class="fab fa-google"></i>
@@ -913,32 +964,38 @@
                                 </button>
                             </div>
                         </div>
-                        
+
                         <div id="register-form" style="display: none;">
                             <div class="form-group">
                                 <label class="form-label" for="register-name">Nome Completo</label>
-                                <input type="text" id="register-name" class="form-control" placeholder="Seu nome completo">
+                                <input type="text" id="register-name" class="form-control"
+                                    placeholder="Seu nome completo">
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="register-email">E-mail</label>
-                                <input type="email" id="register-email" class="form-control" placeholder="seu@email.com">
+                                <input type="email" id="register-email" class="form-control"
+                                    placeholder="seu@email.com">
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="register-password">Senha</label>
-                                <input type="password" id="register-password" class="form-control" placeholder="Crie uma senha segura">
+                                <input type="password" id="register-password" class="form-control"
+                                    placeholder="Crie uma senha segura">
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="register-confirm">Confirmar Senha</label>
-                                <input type="password" id="register-confirm" class="form-control" placeholder="Digite novamente sua senha">
+                                <input type="password" id="register-confirm" class="form-control"
+                                    placeholder="Digite novamente sua senha">
                             </div>
-                            
+
                             <button class="btn btn-primary" id="register-submit" style="width: 100%;">
                                 <i class="fas fa-user-plus"></i>
                                 Criar Minha Conta
                             </button>
-                            
+
                             <p style="text-align: center; margin-top: 15px; font-size: 12px; color: var(--text-muted);">
-                                Ao criar uma conta, você concorda com nossos <a href="#" style="color: var(--primary);">Termos de Uso</a> e <a href="#" style="color: var(--primary);">Política de Privacidade</a>.
+                                Ao criar uma conta, você concorda com nossos <a href="#"
+                                    style="color: var(--primary);">Termos de Uso</a> e <a href="#"
+                                    style="color: var(--primary);">Política de Privacidade</a>.
                             </p>
                         </div>
                     </div>
@@ -951,10 +1008,10 @@
     <section class="features-preview" id="como-funciona">
         <div class="container">
             <div class="section-header fade-in">
-                <h2 class="section-title">Como o Finança+ Funciona</h2>
+                <h2 class="section-title">Como o FinSync Funciona</h2>
                 <p class="section-subtitle">Três passos simples para transformar sua vida financeira</p>
             </div>
-            
+
             <div class="features-grid-preview">
                 <div class="feature-card-preview fade-in delay-1">
                     <div class="feature-icon-preview">
@@ -963,7 +1020,7 @@
                     <h3>1. Crie Sua Conta</h3>
                     <p>Registre-se gratuitamente em menos de 2 minutos. Não pedimos cartão de crédito para começar.</p>
                 </div>
-                
+
                 <div class="feature-card-preview fade-in delay-2">
                     <div class="feature-icon-preview">
                         <i class="fas fa-wallet"></i>
@@ -971,7 +1028,7 @@
                     <h3>2. Adicione suas Finanças</h3>
                     <p>Conecte suas contas bancárias automaticamente ou adicione receitas e despesas manualmente.</p>
                 </div>
-                
+
                 <div class="feature-card-preview fade-in delay-3">
                     <div class="feature-icon-preview">
                         <i class="fas fa-chart-line"></i>
@@ -990,7 +1047,7 @@
                 <h2 class="section-title">Recursos Poderosos</h2>
                 <p class="section-subtitle">Tudo que você precisa para tomar controle da sua vida financeira</p>
             </div>
-            
+
             <div class="features-grid-preview">
                 <div class="feature-card-preview fade-in delay-1">
                     <div class="feature-icon-preview">
@@ -1000,7 +1057,7 @@
                     <p>Visão completa da sua situação financeira com gráficos interativos e alertas personalizados.</p>
                     <span class="badge-free">GRATUITO</span>
                 </div>
-                
+
                 <div class="feature-card-preview fade-in delay-2">
                     <div class="feature-icon-preview">
                         <i class="fas fa-calendar-check"></i>
@@ -1009,7 +1066,7 @@
                     <p>Planejamento automático 30/50/20 ou personalizado com metas e acompanhamento em tempo real.</p>
                     <span class="badge-premium">PREMIUM</span>
                 </div>
-                
+
                 <div class="feature-card-preview fade-in delay-3">
                     <div class="feature-icon-preview">
                         <i class="fas fa-heartbeat"></i>
@@ -1018,7 +1075,7 @@
                     <p>Diagnóstico completo da sua situação financeira com plano personalizado de melhoria.</p>
                     <span class="badge-premium">PREMIUM</span>
                 </div>
-                
+
                 <div class="feature-card-preview fade-in delay-1">
                     <div class="feature-icon-preview">
                         <i class="fas fa-wallet"></i>
@@ -1027,7 +1084,7 @@
                     <p>Controle total de receitas e despesas com categorização automática e relatórios detalhados.</p>
                     <span class="badge-free">GRATUITO</span>
                 </div>
-                
+
                 <div class="feature-card-preview fade-in delay-2">
                     <div class="feature-icon-preview">
                         <i class="fas fa-briefcase"></i>
@@ -1036,7 +1093,7 @@
                     <p>Oportunidades de trabalho, freelas e renda extra com filtros por área, salário e localização.</p>
                     <span class="badge-free">GRATUITO</span>
                 </div>
-                
+
                 <div class="feature-card-preview fade-in delay-3">
                     <div class="feature-icon-preview">
                         <i class="fas fa-graduation-cap"></i>
@@ -1056,19 +1113,19 @@
                 <h2 class="section-title">Escolha Seu Plano</h2>
                 <p class="section-subtitle">Comece gratuitamente e evolua quando estiver pronto</p>
             </div>
-            
+
             <div class="pricing-grid">
                 <div class="pricing-card fade-in delay-1">
                     <div class="pricing-header">
                         <h3 class="pricing-title">Plano Gratuito</h3>
                         <p class="pricing-description">Para quem está começando a organizar as finanças</p>
                     </div>
-                    
+
                     <div class="pricing-price">
                         <div class="price-amount">R$ 0</div>
                         <div class="price-period">para sempre</div>
                     </div>
-                    
+
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> Dashboard básico</li>
                         <li><i class="fas fa-check"></i> Até 50 transações/mês</li>
@@ -1080,24 +1137,25 @@
                         <li class="disabled"><i class="fas fa-times"></i> Cursos premium</li>
                         <li class="disabled"><i class="fas fa-times"></i> Suporte prioritário</li>
                     </ul>
-                    
-                    <button class="btn btn-secondary" style="width: 100%;" onclick="window.location.href='dashboard.html'">
+
+                    <button class="btn btn-secondary" style="width: 100%;"
+                        onclick="window.location.href='dashboard.html'">
                         Começar Grátis
                     </button>
                 </div>
-                
+
                 <div class="pricing-card popular fade-in delay-2">
                     <div class="popular-badge">MAIS POPULAR</div>
                     <div class="pricing-header">
                         <h3 class="pricing-title">Plano Premium</h3>
                         <p class="pricing-description">Para quem quer controle total e crescimento financeiro</p>
                     </div>
-                    
+
                     <div class="pricing-price">
                         <div class="price-amount">R$ 29,90</div>
                         <div class="price-period">por mês</div>
                     </div>
-                    
+
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> <strong>Tudo do plano gratuito</strong></li>
                         <li><i class="fas fa-check"></i> Transações ilimitadas</li>
@@ -1109,28 +1167,28 @@
                         <li><i class="fas fa-check"></i> Suporte prioritário 24/7</li>
                         <li><i class="fas fa-check"></i> Exportação de dados</li>
                     </ul>
-                    
+
                     <button class="btn btn-premium" style="width: 100%;" onclick="subscribePremium()">
                         <i class="fas fa-crown"></i>
                         Assinar Premium
                     </button>
-                    
+
                     <p style="text-align: center; margin-top: 15px; font-size: 12px; color: var(--text-muted);">
                         Cancele a qualquer momento
                     </p>
                 </div>
-                
+
                 <div class="pricing-card fade-in delay-3">
                     <div class="pricing-header">
                         <h3 class="pricing-title">Plano Família</h3>
                         <p class="pricing-description">Para famílias que querem controle conjunto</p>
                     </div>
-                    
+
                     <div class="pricing-price">
                         <div class="price-amount">R$ 49,90</div>
                         <div class="price-period">por mês</div>
                     </div>
-                    
+
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> <strong>Tudo do plano Premium</strong></li>
                         <li><i class="fas fa-check"></i> Até 5 membros da família</li>
@@ -1141,7 +1199,7 @@
                         <li><i class="fas fa-check"></i> Controle de mesada</li>
                         <li><i class="fas fa-check"></i> Educação financeira para crianças</li>
                     </ul>
-                    
+
                     <button class="btn btn-secondary" style="width: 100%;" onclick="subscribeFamily()">
                         Assinar Família
                     </button>
@@ -1155,52 +1213,68 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
-                    <a href="#" class="logo">
-                        <div class="logo-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
+                    <a href="index.html" class="logo">
+                        <!-- Remova o div .logo-icon e coloque a imagem direta -->
+                        <img src="imagens/WhatsApp_Image_2025-12-02_at_12.31.29-removebg-preview.png" alt="FinSync Logo"
+                            style="width: 60px; height: 60px;">
                         <div class="logo-text">
-                            <h1>Finança+</h1>
-                            <span>Controle financeiro inteligente</span>
+                            <h1>FinSync</h1>
+                            <span>Sincronize suas finanças</span>
                         </div>
                     </a>
-                    <p class="mt-20">Tome controle da sua vida financeira com ferramentas poderosas e insights inteligentes.</p>
+                    <p class="mt-20">Sincronize sua vida financeira com ferramentas poderosas e insights inteligentes.
+                    </p>
+
                     <div class="social-links">
-                        <a href="#" class="social-link">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link">
+                        <a href="https://www.instagram.com/finsync_oficial?igsh=OTJvdXh2dXpyaTdp" class="social-link"
+                            target="_blank" title="Siga-nos no Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="social-link">
+                        <a href="#" class="social-link" title="Siga-nos no Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Siga-nos no Twitter/X">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Conecte-se no LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
                     </div>
+
+                    <div class="mt-20"
+                        style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px; border-left: 4px solid #E4405F;">
+                        <p style="margin: 0; font-size: 14px; color: var(--text-muted);">
+                            <i class="fab fa-instagram" style="color: #E4405F;"></i>
+                            <strong>Siga nosso Instagram:</strong>
+                            <br>
+                            <a href="https://www.instagram.com/finsync_oficial?igsh=OTJvdXh2dXpyaTdp" target="_blank"
+                                style="color: var(--primary); text-decoration: none; font-weight: 600;">
+                                @finsync_oficial
+                            </a>
+                        </p>
+                    </div>
                 </div>
-                
+
                 <div class="footer-column">
                     <h3>Produto</h3>
                     <ul class="footer-links">
-                        <li><a href="#recursos">Recursos</a></li>
-                        <li><a href="#planos">Planos</a></li>
-                        <li><a href="dashboard.html">Dashboard</a></li>
-                        <li><a href="#planos">Premium</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#saude">Saúde Financeira</a></li>
+                        <li><a href="#planejador">Planejador</a></li>
+                        <li><a href="#premium">Premium</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-column">
                     <h3>Empresa</h3>
                     <ul class="footer-links">
+                        <li><a href="index.html">Início</a></li>
                         <li><a href="#">Sobre Nós</a></li>
                         <li><a href="#">Blog</a></li>
-                        <li><a href="#">Carreiras</a></li>
                         <li><a href="#">Contato</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-column">
                     <h3>Legal</h3>
                     <ul class="footer-links">
@@ -1211,9 +1285,14 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="footer-bottom">
-                <p>&copy; 2023 Finança+. Todos os direitos reservados.</p>
+                <p>&copy; 2025 FinSync. Todos os direitos reservados. |
+                    <a href="https://www.instagram.com/finsync_oficial?igsh=OTJvdXh2dXpyaTdp" target="_blank"
+                        style="color: var(--text-muted); text-decoration: none;">
+                        <i class="fab fa-instagram"></i> @finsync_oficial
+                    </a>
+                </p>
             </div>
         </div>
     </footer>
@@ -1223,12 +1302,12 @@
         <div class="modal-content">
             <span class="close-modal" id="close-payment-modal">&times;</span>
             <h2 style="margin-bottom: 20px;">Assinar Plano Premium</h2>
-            
+
             <div class="form-group">
                 <label class="form-label">Número do Cartão</label>
                 <input type="text" id="card-number" class="form-control" placeholder="1234 5678 9012 3456">
             </div>
-            
+
             <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                 <div class="form-group">
                     <label class="form-label">Validade</label>
@@ -1239,17 +1318,17 @@
                     <input type="text" id="card-cvv" class="form-control" placeholder="123">
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label class="form-label">Nome no Cartão</label>
                 <input type="text" id="card-name" class="form-control" placeholder="Nome completo">
             </div>
-            
+
             <button class="btn btn-premium" style="width: 100%; margin-top: 20px;" onclick="processPayment()">
                 <i class="fas fa-lock"></i>
                 Pagar R$ 29,90/mês
             </button>
-            
+
             <p style="text-align: center; margin-top: 15px; font-size: 12px; color: var(--text-muted);">
                 Pagamento seguro via criptografia SSL. Cancele a qualquer momento.
             </p>
@@ -1260,7 +1339,7 @@
         // Simulação de autenticação
         const users = JSON.parse(localStorage.getItem('financaplus_users')) || [];
         let currentUser = JSON.parse(localStorage.getItem('financaplus_current_user')) || null;
-        
+
         // Elementos DOM
         const loginTabBtn = document.getElementById('login-tab-btn');
         const registerTabBtn = document.getElementById('register-tab-btn');
@@ -1270,75 +1349,75 @@
         const registerSubmit = document.getElementById('register-submit');
         const paymentModal = document.getElementById('payment-modal');
         const closePaymentModal = document.getElementById('close-payment-modal');
-        
+
         // Alternar entre login e registro
-        loginTabBtn.addEventListener('click', function() {
+        loginTabBtn.addEventListener('click', function () {
             loginTabBtn.classList.add('active');
             registerTabBtn.classList.remove('active');
             loginForm.style.display = 'block';
             registerForm.style.display = 'none';
         });
-        
-        registerTabBtn.addEventListener('click', function() {
+
+        registerTabBtn.addEventListener('click', function () {
             registerTabBtn.classList.add('active');
             loginTabBtn.classList.remove('active');
             registerForm.style.display = 'block';
             loginForm.style.display = 'none';
         });
-        
+
         // Login
-        loginSubmit.addEventListener('click', function() {
+        loginSubmit.addEventListener('click', function () {
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
-            
+
             if (!email || !password) {
                 alert('Por favor, preencha todos os campos.');
                 return;
             }
-            
+
             // Simulação de autenticação
             const user = users.find(u => u.email === email && u.password === password);
-            
+
             if (user) {
                 // Salvar usuário atual
                 currentUser = user;
                 localStorage.setItem('financaplus_current_user', JSON.stringify(user));
-                
+
                 // Redirecionar para dashboard
                 window.location.href = 'dashboard.html';
             } else {
                 alert('E-mail ou senha incorretos.');
             }
         });
-        
+
         // Registro
-        registerSubmit.addEventListener('click', function() {
+        registerSubmit.addEventListener('click', function () {
             const name = document.getElementById('register-name').value;
             const email = document.getElementById('register-email').value;
             const password = document.getElementById('register-password').value;
             const confirm = document.getElementById('register-confirm').value;
-            
+
             if (!name || !email || !password || !confirm) {
                 alert('Por favor, preencha todos os campos.');
                 return;
             }
-            
+
             if (password !== confirm) {
                 alert('As senhas não coincidem.');
                 return;
             }
-            
+
             if (password.length < 6) {
                 alert('A senha deve ter pelo menos 6 caracteres.');
                 return;
             }
-            
+
             // Verificar se usuário já existe
             if (users.find(u => u.email === email)) {
                 alert('Este e-mail já está cadastrado.');
                 return;
             }
-            
+
             // Criar novo usuário
             const newUser = {
                 id: Date.now(),
@@ -1349,52 +1428,52 @@
                 createdAt: new Date().toISOString(),
                 premiumExpiry: null
             };
-            
+
             users.push(newUser);
             localStorage.setItem('financaplus_users', JSON.stringify(users));
-            
+
             // Fazer login automaticamente
             currentUser = newUser;
             localStorage.setItem('financaplus_current_user', JSON.stringify(newUser));
-            
+
             alert('Conta criada com sucesso! Redirecionando para o dashboard...');
             window.location.href = 'dashboard.html';
         });
-        
+
         // Assinar Premium
-        window.subscribePremium = function() {
+        window.subscribePremium = function () {
             if (!currentUser) {
                 alert('Por favor, faça login primeiro.');
                 registerTabBtn.click();
                 return;
             }
-            
+
             paymentModal.style.display = 'flex';
         }
-        
+
         // Assinar Família
-        window.subscribeFamily = function() {
+        window.subscribeFamily = function () {
             if (!currentUser) {
                 alert('Por favor, faça login primeiro.');
                 registerTabBtn.click();
                 return;
             }
-            
+
             alert('O plano Família estará disponível em breve!');
         }
-        
+
         // Processar pagamento
-        window.processPayment = function() {
+        window.processPayment = function () {
             const cardNumber = document.getElementById('card-number').value;
             const cardExpiry = document.getElementById('card-expiry').value;
             const cardCvv = document.getElementById('card-cvv').value;
             const cardName = document.getElementById('card-name').value;
-            
+
             if (!cardNumber || !cardExpiry || !cardCvv || !cardName) {
                 alert('Por favor, preencha todos os campos do cartão.');
                 return;
             }
-            
+
             // Simulação de processamento
             setTimeout(() => {
                 // Atualizar usuário para premium
@@ -1403,61 +1482,62 @@
                     users[userIndex].plan = 'premium';
                     users[userIndex].premiumExpiry = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(); // 30 dias
                     localStorage.setItem('financaplus_users', JSON.stringify(users));
-                    
+
                     currentUser = users[userIndex];
                     localStorage.setItem('financaplus_current_user', JSON.stringify(users[userIndex]));
                 }
-                
+
                 paymentModal.style.display = 'none';
                 alert('🎉 Parabéns! Você agora é um usuário Premium!');
-                
+
                 // Redirecionar para dashboard
                 window.location.href = 'dashboard.html';
             }, 1500);
         }
-        
+
         // Fechar modal de pagamento
-        closePaymentModal.addEventListener('click', function() {
+        closePaymentModal.addEventListener('click', function () {
             paymentModal.style.display = 'none';
         });
-        
+
         // Fechar modal ao clicar fora
-        window.addEventListener('click', function(e) {
+        window.addEventListener('click', function (e) {
             if (e.target === paymentModal) {
                 paymentModal.style.display = 'none';
             }
         });
-        
+
         // Menu mobile
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+        document.getElementById('mobileMenuBtn').addEventListener('click', function () {
             document.getElementById('mainNav').classList.toggle('open');
         });
-        
+
         // Scroll suave
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                
+
                 const targetId = this.getAttribute('href');
                 if (targetId === '#') return;
-                
+
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     window.scrollTo({
                         top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
                     });
-                    
+
                     // Fechar menu mobile se aberto
                     document.getElementById('mainNav').classList.remove('open');
                 }
             });
         });
-        
+
         // Verificar se já está logado
         if (currentUser && window.location.pathname.includes('index.html')) {
             window.location.href = 'dashboard.html';
         }
     </script>
 </body>
+
 </html>
